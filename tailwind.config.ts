@@ -5,5 +5,8 @@ export default {
     theme: {
         extend: {},
     },
-    plugins: [],
+    plugins: [require("tailwind-bootstrap-grid")()],
+    corePlugins: {
+        container: false,
+    },
 } satisfies Config;

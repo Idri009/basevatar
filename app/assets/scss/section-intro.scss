@@ -1,0 +1,30 @@
+.section-intro {
+    @apply py-8;
+
+    .intro {
+        p {
+            @apply text-3xl md:text-5xl leading-normal md:leading-relaxed;
+        }
+
+        .links {
+            & > a {
+                @apply border-2 rounded px-6 py-4 text-xl;
+            }
+
+            & a:nth-child(1) {
+                @apply bg-blue-500 hover:bg-blue-600  border-blue-600 mr-4;
+            }
+            & a:nth-child(2) {
+                @apply border-gray-200 hover:border-blue-200;
+            }
+        }
+    }
+
+    .images {
+        @apply grid grid-cols-3 gap-6 mt-16 md:mt-0;
+
+        & > div {
+            @apply mx-auto border-gray-800 border-8 rounded;
+        }
+    }
+}

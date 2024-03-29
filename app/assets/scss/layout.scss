@@ -1,0 +1,10 @@
+html,
+body {
+    font-family: "Inter", "Arial", sans-serif;
+}
+
+body {
+    @apply bg-black text-white;
+}
+
+@import "./section-intro.scss";
