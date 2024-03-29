@@ -2,6 +2,16 @@
     @apply py-8;
 
     .intro {
+        @apply relative;
+        &::before {
+            @apply absolute inset-0  opacity-10;
+            content: "";
+            background: url("../img/base-logo.png");
+            background-size: 80%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
         p {
             @apply text-3xl md:text-5xl leading-normal md:leading-relaxed;
         }
