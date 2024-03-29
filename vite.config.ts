@@ -6,5 +6,18 @@ import tsconfigPaths from "vite-tsconfig-paths";
 installGlobals();
 
 export default defineConfig({
-  plugins: [remix(), tsconfigPaths()],
+    plugins: [
+        remix({
+            routes: async (defineRoutes) => {
+                return defineRoutes((route) => {
+                    // Layout
+                    route("/", "pages/_layout.tsx", () => {
+                        // Index
+                        route("/", "pages/index.tsx");
+                    });
+                });
+            },
+        }),
+        tsconfigPaths(),
+    ],
 });
