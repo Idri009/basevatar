@@ -17,6 +17,8 @@ const Index = () => {
                             voluptate,
                             <span className="text-amber-500 font-semibold"> cum soluta minima</span>, et, ut blanditiis
                             <span className="text-red-400 font-semibold"> deserunt ex officia?</span>
+                            <span className="text-green-300 font-semibold">Lorem dolor</span> sit amet <br />
+                            consectetur, elit.
                         </p>
 
                         <div className="mt-8 links">

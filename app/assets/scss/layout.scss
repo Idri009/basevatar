@@ -7,4 +7,14 @@ body {
     @apply bg-black text-white;
 }
 
+.heading {
+    .title {
+        @apply text-4xl font-bold mb-2;
+    }
+    .subtitle {
+        @apply text-base text-zinc-400;
+    }
+}
+
 @import "./section-intro.scss";
+@import "./section-faq.scss";

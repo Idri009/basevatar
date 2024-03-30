@@ -14,6 +14,7 @@ export default defineConfig({
                     route("/", "pages/_layout.tsx", () => {
                         // Index
                         route("/", "pages/index.tsx");
+                        route("/faq", "pages/faq.tsx");
                     });
                 });
             },
