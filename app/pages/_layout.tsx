@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { isRouteErrorResponse, Outlet, useRouteError } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 import type { ReactNode } from "react";
 import Navbar from "~/components/Navbar/Navbar";
 
@@ -24,26 +24,6 @@ const LayoutWithOutlet = () => {
     return (
         <Layout>
             <Outlet />
-        </Layout>
-    );
-};
-
-export const ErrorBoundary = () => {
-    const error = useRouteError();
-
-    if (isRouteErrorResponse(error)) {
-        if (error.status === 404) {
-            return (
-                <Layout>
-                    <h1>404 Not Found</h1>
-                </Layout>
-            );
-        }
-    }
-
-    return (
-        <Layout>
-            <h1>500 Server Error</h1>
         </Layout>
     );
 };
