@@ -14,6 +14,10 @@ export default defineConfig({
                     route("/", "pages/_layout.tsx", () => {
                         // Index
                         route("/", "pages/index.tsx");
+
+                        // Mint
+                        route("/mint", "pages/mint.tsx");
+                        // FAQ
                         route("/faq", "pages/faq.tsx");
                     });
                 });
