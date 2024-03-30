@@ -1,4 +1,4 @@
-import srcIntroImg1 from "../assets/img/intro-img-1.png";
+import srcIntroImg1 from "../assets/img/intro-img-4.png";
 
 const Mint = () => {
     return (

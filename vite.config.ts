@@ -17,6 +17,8 @@ export default defineConfig({
 
                         // Mint
                         route("/mint", "pages/mint.tsx");
+                        // Vote
+                        route("/vote", "pages/vote.tsx");
                         // FAQ
                         route("/faq", "pages/faq.tsx");
                     });
