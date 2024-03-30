@@ -1,0 +1,15 @@
+.navbar {
+    @apply py-4;
+
+    .menu {
+        @apply text-lg;
+
+        & > ul {
+            @apply flex flex-col md:flex-row justify-between items-center gap-x-8;
+
+            & > li {
+                @apply py-2 font-semibold;
+            }
+        }
+    }
+}
