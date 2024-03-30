@@ -2,8 +2,7 @@
     @apply p-8;
 
     .mint {
-        @apply relative;
-
+        @apply flex flex-col flex-1;
         &-title {
             @apply text-3xl font-semibold;
         }
@@ -12,6 +11,20 @@
             @apply mt-4 flex flex-wrap gap-4;
             .color {
                 @apply w-8 h-8 rounded-sm;
+            }
+        }
+
+        .countdown-timer {
+            @apply mt-4 text-zinc-300;
+
+            .countdown-item {
+                @apply inline-block mr-4 text-center;
+                .countdown-number {
+                    @apply text-4xl font-semibold;
+                }
+                .countdown-text {
+                    @apply text-base text-zinc-200;
+                }
             }
         }
 
@@ -26,25 +39,11 @@
             }
         }
 
-        .countdown-timer {
-            @apply mt-4;
-
-            .countdown-item {
-                @apply inline-block mr-4 text-center;
-                .countdown-number {
-                    @apply text-4xl font-semibold;
-                }
-                .countdown-text {
-                    @apply text-base text-zinc-300;
-                }
-            }
-        }
-
         .mint-button {
-            @apply mt-6;
+            @apply flex flex-col flex-grow;
 
             button {
-                @apply block text-center w-full py-2 rounded-lg text-xl text-white font-semibold;
+                @apply mt-auto block text-center w-full py-2 rounded-lg text-xl text-white font-semibold;
                 @apply bg-blue-600 hover:bg-blue-700;
             }
 

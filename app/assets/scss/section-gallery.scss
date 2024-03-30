@@ -1,0 +1,36 @@
+.section-gallery {
+    @apply py-8;
+
+    .gallery {
+        @apply mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-16;
+
+        .image {
+            @apply border-2 border-zinc-300 rounded;
+        }
+
+        .title {
+            @apply flex justify-between mt-4;
+            @apply text-xl font-semibold;
+
+            .color-palette {
+                @apply flex items-center gap-2;
+
+                .color {
+                    @apply w-4 h-4 rounded-sm;
+                }
+            }
+        }
+
+        .button > a {
+            @apply block text-center py-2 mt-2 text-sm font-semibold text-white bg-amber-800 hover:bg-amber-700 rounded;
+        }
+
+        .links {
+            @apply flex justify-between mt-2;
+
+            a {
+                @apply text-sm font-thin text-zinc-400 hover:text-zinc-200;
+            }
+        }
+    }
+}

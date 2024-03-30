@@ -14,7 +14,8 @@ export default defineConfig({
                     route("/", "pages/_layout.tsx", () => {
                         // Index
                         route("/", "pages/index.tsx");
-
+                        // Gallery
+                        route("/gallery", "pages/gallery.tsx");
                         // Mint
                         route("/mint", "pages/mint.tsx");
                         // Vote
