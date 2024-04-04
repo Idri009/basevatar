@@ -3,6 +3,7 @@ import srcIntroImg1 from "../assets/img/intro-img-1.png";
 import srcIntroImg2 from "../assets/img/intro-img-2.png";
 import srcIntroImg3 from "../assets/img/intro-img-3.png";
 import srcIntroImg4 from "../assets/img/intro-img-4.png";
+import { LucideDownload, LucideSailboat } from "lucide-react";
 
 const Gallery = () => {
     return (
@@ -32,8 +33,14 @@ const Gallery = () => {
                                 <Link to="/">BUY 0.001 ETH</Link>
                             </div>
                             <div className="links">
-                                <Link to="/">Download</Link>
-                                <Link to="/">View on Opensea</Link>
+                                <Link to="/">
+                                    <LucideDownload size={16} />
+                                    Download
+                                </Link>
+                                <Link to="/">
+                                    <LucideSailboat size={16} />
+                                    View on Opensea
+                                </Link>
                             </div>
                         </div>
                         <div className="item">
@@ -54,8 +61,14 @@ const Gallery = () => {
                                 <Link to="/">BUY 0.001 ETH</Link>
                             </div>
                             <div className="links">
-                                <Link to="/">Download</Link>
-                                <Link to="/">View on Opensea</Link>
+                                <Link to="/">
+                                    <LucideDownload size={16} />
+                                    Download
+                                </Link>
+                                <Link to="/">
+                                    <LucideSailboat size={16} />
+                                    View on Opensea
+                                </Link>
                             </div>
                         </div>
                         <div className="item">
@@ -76,8 +89,14 @@ const Gallery = () => {
                                 <Link to="/">BUY 0.001 ETH</Link>
                             </div>
                             <div className="links">
-                                <Link to="/">Download</Link>
-                                <Link to="/">View on Opensea</Link>
+                                <Link to="/">
+                                    <LucideDownload size={16} />
+                                    Download
+                                </Link>
+                                <Link to="/">
+                                    <LucideSailboat size={16} />
+                                    View on Opensea
+                                </Link>
                             </div>
                         </div>
                         <div className="item">
@@ -98,8 +117,14 @@ const Gallery = () => {
                                 <Link to="/">BUY 0.001 ETH</Link>
                             </div>
                             <div className="links">
-                                <Link to="/">Download</Link>
-                                <Link to="/">View on Opensea</Link>
+                                <Link to="/">
+                                    <LucideDownload size={16} />
+                                    Download
+                                </Link>
+                                <Link to="/">
+                                    <LucideSailboat size={16} />
+                                    View on Opensea
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -1,14 +1,43 @@
+import { useEffect, useState } from "react";
 import srcIntroImg1 from "../assets/img/intro-img-4.png";
 
 const Mint = () => {
+    const [countdown, setCountdown] = useState({
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    });
+
+    useEffect(() => {
+        const endDate = new Date("2024-04-04T15:59:59Z");
+        const interval = setInterval(() => {
+            const now = new Date();
+            const timeDifference = endDate.getTime() - now.getTime();
+
+            if (timeDifference > 0) {
+                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                setCountdown({ hours, minutes, seconds });
+            } else {
+                clearInterval(interval);
+            }
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
     return (
         <section className="section-mint">
             <div className="container">
-                <div className="row">
-                    <div className="col-6">
+                <div className="row flex-wrap-reverse gap-y-8 md:gap-y-0">
+                    <div className="md:col-6">
                         <img src={srcIntroImg1} alt="intro-img-1" className="rounded" />
                     </div>
-                    <div className="col-6 mint">
+                    <div className="md:col-6 mint">
                         <h3 className="mint-title">DAY #1: The Dinasour</h3>
                         <div className="color-palette">
                             <div className="color" style={{ backgroundColor: "#FFD700" }}></div>
@@ -19,15 +48,15 @@ const Mint = () => {
                         </div>
                         <div className="countdown-timer">
                             <div className="countdown-item">
-                                <div className="countdown-number">02</div>
+                                <div className="countdown-number">{countdown.hours.toString().padStart(2, "0")}</div>
                                 <div className="countdown-text">Hours</div>
                             </div>
                             <div className="countdown-item">
-                                <div className="countdown-number">23</div>
+                                <div className="countdown-number">{countdown.minutes.toString().padStart(2, "0")}</div>
                                 <div className="countdown-text">Minutes</div>
                             </div>
                             <div className="countdown-item">
-                                <div className="countdown-number">52</div>
+                                <div className="countdown-number">{countdown.seconds.toString().padStart(2, "0")}</div>
                                 <div className="countdown-text">Seconds</div>
                             </div>
                         </div>

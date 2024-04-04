@@ -1,17 +1,28 @@
 import { Link } from "@remix-run/react";
 import classes from "./Navbar.module.scss";
+import { LucideMenu } from "lucide-react";
+import { useRef } from "react";
 
 const Navbar = () => {
+    const menuRef = useRef<HTMLDivElement>(null);
+
     return (
         <nav className={classes.navbar}>
             <div className="container">
                 <div className="md:flex justify-between items-center">
-                    <div className="logo text-4xl mb-4 md:mb-0 text-center md:text-left">
+                    <div className={classes.logo}>
                         <Link to="/">
                             <span className="font-bold text-blue-200">BASE</span>VATAR
                         </Link>
+                        <button
+                            onClick={(e) => {
+                                menuRef.current && menuRef.current.classList.toggle(classes.active);
+                            }}
+                        >
+                            <LucideMenu size={32} />
+                        </button>
                     </div>
-                    <div className={classes.menu}>
+                    <div ref={menuRef} className={classes.menu}>
                         <ul>
                             <li>
                                 <Link to="/gallery" className="hover:text-blue-100">

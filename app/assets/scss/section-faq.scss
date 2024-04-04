@@ -5,6 +5,11 @@
         @apply mt-4 max-w-[900px];
 
         &-item {
+            // arrow icon
+            svg {
+                @apply transition-transform;
+            }
+
             &.active {
                 .accordion-title {
                     @apply bg-white text-black;
@@ -12,6 +17,11 @@
 
                 .accordion-content {
                     @apply block;
+                }
+
+                // arrow icon
+                svg {
+                    @apply transform rotate-180;
                 }
             }
 

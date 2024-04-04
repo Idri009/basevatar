@@ -1,8 +1,23 @@
 .navbar {
     @apply py-4;
 
+    .logo {
+        @apply flex items-center justify-between my-4;
+
+        a {
+            @apply text-4xl text-left;
+        }
+        button {
+            @apply block md:hidden;
+        }
+    }
+
     .menu {
-        @apply text-lg;
+        &.active {
+            @apply block;
+        }
+
+        @apply hidden md:block text-lg;
 
         & > ul {
             @apply flex flex-col md:flex-row justify-between items-center gap-x-8;

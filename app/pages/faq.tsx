@@ -1,3 +1,5 @@
+import { LucideChevronDown } from "lucide-react";
+
 const FAQ_CONTENT = [
     {
         title: "What is Lorem Ipsum?",
@@ -44,10 +46,12 @@ const FAQ = () => {
                                     }
                                 >
                                     {faq.title}
+                                    <LucideChevronDown size={20} />
                                 </button>
-                                <div className="accordion-content">
-                                    <p>{faq.content}</p>
-                                </div>
+                                <div
+                                    className="accordion-content"
+                                    dangerouslySetInnerHTML={{ __html: faq.content }}
+                                ></div>
                             </div>
                         ))}
                     </div>
