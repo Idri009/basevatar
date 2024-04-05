@@ -1,4 +1,4 @@
-import { LucideChevronDown } from "lucide-react";
+import Faq from "../../components/Faq/Faq";
 
 const FAQ_CONTENT = [
     {
@@ -23,9 +23,9 @@ const FAQ_CONTENT = [
     },
 ];
 
-const FAQ = () => {
+const Page = () => {
     return (
-        <section className="section-faq">
+        <section className="py-8">
             <div className="container">
                 <div className="row">
                     <div className="heading">
@@ -36,29 +36,11 @@ const FAQ = () => {
                         </p>
                     </div>
 
-                    <div className="accordion">
-                        {FAQ_CONTENT.map((faq, index) => (
-                            <div key={index} className="accordion-item">
-                                <button
-                                    className="accordion-title"
-                                    onClick={(e) =>
-                                        (e.currentTarget.parentNode as HTMLElement)?.classList.toggle("active")
-                                    }
-                                >
-                                    {faq.title}
-                                    <LucideChevronDown size={20} />
-                                </button>
-                                <div
-                                    className="accordion-content"
-                                    dangerouslySetInnerHTML={{ __html: faq.content }}
-                                ></div>
-                            </div>
-                        ))}
-                    </div>
+                    <Faq data={FAQ_CONTENT} />
                 </div>
             </div>
         </section>
     );
 };
 
-export default FAQ;
+export default Page;

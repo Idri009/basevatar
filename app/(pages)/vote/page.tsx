@@ -1,4 +1,4 @@
-const Vote = () => {
+const Page = () => {
     return (
         <section className="section-vote">
             <div className="container">
@@ -77,4 +77,4 @@ const Vote = () => {
     );
 };
 
-export default Vote;
+export default Page;

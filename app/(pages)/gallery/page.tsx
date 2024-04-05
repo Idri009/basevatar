@@ -1,11 +1,13 @@
-import { Link } from "@remix-run/react";
-import srcIntroImg1 from "../assets/img/intro-img-1.png";
-import srcIntroImg2 from "../assets/img/intro-img-2.png";
-import srcIntroImg3 from "../assets/img/intro-img-3.png";
-import srcIntroImg4 from "../assets/img/intro-img-4.png";
+import Link from "next/link";
+import Image from "next/image";
+
+import srcIntroImg1 from "@/app/assets/img/intro-img-1.png";
+import srcIntroImg2 from "@/app/assets/img/intro-img-2.png";
+import srcIntroImg3 from "@/app/assets/img/intro-img-3.png";
+import srcIntroImg4 from "@/app/assets/img/intro-img-4.png";
 import { LucideDownload, LucideSailboat } from "lucide-react";
 
-const Gallery = () => {
+const Page = () => {
     return (
         <section className="section-gallery">
             <div className="container">
@@ -17,7 +19,7 @@ const Gallery = () => {
                     <div className="gallery">
                         <div className="item">
                             <div className="image">
-                                <img src={srcIntroImg1} alt="" />
+                                <Image src={srcIntroImg1} alt="" />
                             </div>
                             <div className="title">
                                 <h6>Day #234: Easter Egg Hunt</h6>
@@ -30,14 +32,14 @@ const Gallery = () => {
                                 </div>
                             </div>
                             <div className="button">
-                                <Link to="/">BUY 0.001 ETH</Link>
+                                <Link href="/">BUY 0.001 ETH</Link>
                             </div>
                             <div className="links">
-                                <Link to="/">
+                                <Link href="/">
                                     <LucideDownload size={16} />
                                     Download
                                 </Link>
-                                <Link to="/">
+                                <Link href="/">
                                     <LucideSailboat size={16} />
                                     View on Opensea
                                 </Link>
@@ -45,7 +47,7 @@ const Gallery = () => {
                         </div>
                         <div className="item">
                             <div className="image">
-                                <img src={srcIntroImg2} alt="" />
+                                <Image src={srcIntroImg2} alt="" />
                             </div>
                             <div className="title">
                                 <h6>Day #234: Easter Egg Hunt</h6>
@@ -58,14 +60,14 @@ const Gallery = () => {
                                 </div>
                             </div>
                             <div className="button">
-                                <Link to="/">BUY 0.001 ETH</Link>
+                                <Link href="/">BUY 0.001 ETH</Link>
                             </div>
                             <div className="links">
-                                <Link to="/">
+                                <Link href="/">
                                     <LucideDownload size={16} />
                                     Download
                                 </Link>
-                                <Link to="/">
+                                <Link href="/">
                                     <LucideSailboat size={16} />
                                     View on Opensea
                                 </Link>
@@ -73,7 +75,7 @@ const Gallery = () => {
                         </div>
                         <div className="item">
                             <div className="image">
-                                <img src={srcIntroImg3} alt="" />
+                                <Image src={srcIntroImg3} alt="" />
                             </div>
                             <div className="title">
                                 <h6>Day #234: Easter Egg Hunt</h6>
@@ -86,14 +88,14 @@ const Gallery = () => {
                                 </div>
                             </div>
                             <div className="button">
-                                <Link to="/">BUY 0.001 ETH</Link>
+                                <Link href="/">BUY 0.001 ETH</Link>
                             </div>
                             <div className="links">
-                                <Link to="/">
+                                <Link href="/">
                                     <LucideDownload size={16} />
                                     Download
                                 </Link>
-                                <Link to="/">
+                                <Link href="/">
                                     <LucideSailboat size={16} />
                                     View on Opensea
                                 </Link>
@@ -101,7 +103,7 @@ const Gallery = () => {
                         </div>
                         <div className="item">
                             <div className="image">
-                                <img src={srcIntroImg4} alt="" />
+                                <Image src={srcIntroImg4} alt="" />
                             </div>
                             <div className="title">
                                 <h6>Day #234: Easter Egg Hunt</h6>
@@ -114,14 +116,14 @@ const Gallery = () => {
                                 </div>
                             </div>
                             <div className="button">
-                                <Link to="/">BUY 0.001 ETH</Link>
+                                <Link href="/">BUY 0.001 ETH</Link>
                             </div>
                             <div className="links">
-                                <Link to="/">
+                                <Link href="/">
                                     <LucideDownload size={16} />
                                     Download
                                 </Link>
-                                <Link to="/">
+                                <Link href="/">
                                     <LucideSailboat size={16} />
                                     View on Opensea
                                 </Link>
@@ -134,4 +136,4 @@ const Gallery = () => {
     );
 };
 
-export default Gallery;
+export default Page;
