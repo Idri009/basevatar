@@ -3,7 +3,7 @@
 import { prisma } from "@/app/db";
 
 export async function sendVote({ id }: { id: string }) {
-    await prisma.votes.update({
+    const updatedData = await prisma.votes.update({
         where: {
             id,
         },
@@ -13,4 +13,6 @@ export async function sendVote({ id }: { id: string }) {
             },
         },
     });
+
+    return updatedData;
 }

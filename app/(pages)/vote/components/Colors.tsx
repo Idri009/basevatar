@@ -20,7 +20,7 @@ interface IColorProps {
 const Colors = ({ data, ethPrice }: IColorProps) => {
     const { data: hash, sendTransaction } = useSendTransaction();
 
-    const [colors, setColors] = useState<any[]>(data);
+    const [colors, setColors] = useState<IColor[]>(data);
 
     const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
         hash,
@@ -46,19 +46,19 @@ const Colors = ({ data, ethPrice }: IColorProps) => {
             });
         }
         if (isConfirmed) {
-            sendVote({ id: colorId });
-            setColors((prev) =>
-                prev.map((color) => {
-                    if (color.id === colorId) {
-                        return {
-                            ...color,
-                            count: color.count + 1,
-                        };
-                    }
-
-                    return color;
-                })
-            );
+            sendVote({ id: colorId }).then((val) => {
+                setColors((prev) =>
+                    prev.map((color) => {
+                        if (color.id === val.id) {
+                            return {
+                                ...color,
+                                count: val.count,
+                            };
+                        }
+                        return color;
+                    })
+                );
+            });
             toast("Transaction confirmed", {
                 position: "bottom-right",
                 theme: "dark",

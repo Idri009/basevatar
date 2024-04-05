@@ -20,7 +20,7 @@ interface ISubjectProps {
 const Subjects = ({ data, ethPrice }: ISubjectProps) => {
     const { data: hash, sendTransaction } = useSendTransaction();
 
-    const [subjects, setSubjects] = useState<any[]>(data);
+    const [subjects, setSubjects] = useState<ISubject[]>(data);
 
     const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
         hash,
@@ -46,19 +46,20 @@ const Subjects = ({ data, ethPrice }: ISubjectProps) => {
             });
         }
         if (isConfirmed) {
-            sendVote({ id: subjectId });
-            setSubjects((prev) =>
-                prev.map((subject) => {
-                    if (subject.id === subjectId) {
-                        return {
-                            ...subject,
-                            count: subject.count + 1,
-                        };
-                    }
+            sendVote({ id: subjectId }).then((val) => {
+                setSubjects((prev) =>
+                    prev.map((subject) => {
+                        if (subject.id === val.id) {
+                            return {
+                                ...subject,
+                                count: val.count,
+                            };
+                        }
+                        return subject;
+                    })
+                );
+            });
 
-                    return subject;
-                })
-            );
             toast("Transaction confirmed", {
                 position: "bottom-right",
                 theme: "dark",
