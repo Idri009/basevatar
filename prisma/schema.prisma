@@ -7,10 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model settings {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  key   String
+  value String
+}
+
 model faq {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   content String
-  order   BigInt
+  order   Int
   title   String
 }
 
@@ -22,4 +28,18 @@ model gallery {
   image_url   String
   opensea_url String
   title       String
+}
+
+enum voteTypes {
+  color
+  subject
+}
+
+model votes {
+  id    String    @id @default(auto()) @map("_id") @db.ObjectId
+  count Int
+  date  DateTime  @db.Date
+  type  voteTypes
+  value String[]
+  day   Int
 }

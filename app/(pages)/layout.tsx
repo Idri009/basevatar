@@ -9,6 +9,9 @@ import "../assets/scss/layout.scss";
 import Navbar from "../components/Navbar/Navbar";
 import NextAuthProvider from "../providers/NextAuthProvider";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export const metadata: Metadata = {
     title: "Basevatar",
     description: "Basevatar",
@@ -28,6 +31,7 @@ export default function Layout({
                     <Navbar />
                 </header>
                 <main>{children}</main>
+                <ToastContainer />
             </Web3ModalProvider>
         </NextAuthProvider>
     );

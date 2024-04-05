@@ -1,75 +1,46 @@
-const Page = () => {
+import { prisma } from "@/app/db";
+import Colors from "./components/Colors";
+import Subjects from "./components/Subjects";
+
+const VOTE_ETH_PRICE = "0.0002";
+
+const Page = async () => {
+    const settings = await prisma.settings.findFirst({
+        where: {
+            key: "day",
+        },
+    });
+
+    const colors = await prisma.votes.findMany({
+        where: {
+            type: "color",
+            day: Number(settings?.value) + 1 ?? 1,
+        },
+    });
+
+    const subjects = await prisma.votes.findMany({
+        where: {
+            type: "subject",
+            day: Number(settings?.value) + 1 ?? 1,
+        },
+    });
+
     return (
         <section className="section-vote">
             <div className="container">
                 <div className="heading">
-                    <h1 className="title">Vote for Day #2 Themes</h1>
-                    <p className="subtitle">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa recu.</p>
+                    <h1 className="title">Vote for Day #{Number(settings?.value) + 1 || 1} Themes</h1>
+                    <p className="subtitle">
+                        Vote for the colors and subjects you want to see in the next day&apos;s theme.
+                    </p>
+                    <p className="subtitle">Each vote costs {VOTE_ETH_PRICE} ETH.</p>
                 </div>
                 <div className="row gx-8">
                     <div className="sm:col-6 lg:col-4">
-                        <div className="vote-card color-palette">
-                            <div className="colors">
-                                <div className="color" style={{ backgroundColor: "#FFD700" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FFA500" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF6347" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF4500" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF0000" }}></div>
-                            </div>
-                            <div className="color-vote">
-                                <button className="vote-btn">Vote</button>
-                            </div>
-                        </div>
-                        <div className="vote-card color-palette">
-                            <div className="colors">
-                                <div className="color" style={{ backgroundColor: "#FFD700" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FFA500" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF6347" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF4500" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF0000" }}></div>
-                            </div>
-                            <div className="color-vote">
-                                <button className="vote-btn">Vote</button>
-                            </div>
-                        </div>
-                        <div className="vote-card color-palette">
-                            <div className="colors">
-                                <div className="color" style={{ backgroundColor: "#FFD700" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FFA500" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF6347" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF4500" }}></div>
-                                <div className="color" style={{ backgroundColor: "#FF0000" }}></div>
-                            </div>
-                            <div className="color-vote">
-                                <button className="vote-btn">Vote</button>
-                            </div>
-                        </div>
+                        <Colors data={colors} ethPrice={VOTE_ETH_PRICE} />
                     </div>
                     <div className="sm:col-6 lg:col-4">
-                        <div className="vote-card subject">
-                            <div className="title">Subject #1</div>
-                            <div className="subject-vote">
-                                <button className="vote-btn">Vote</button>
-                            </div>
-                        </div>
-                        <div className="vote-card subject">
-                            <div className="title">Subject #2</div>
-                            <div className="subject-vote">
-                                <button className="vote-btn">Vote</button>
-                            </div>
-                        </div>
-                        <div className="vote-card subject">
-                            <div className="title">Subject #3</div>
-                            <div className="subject-vote">
-                                <button className="vote-btn">Vote</button>
-                            </div>
-                        </div>
-                        <div className="vote-card subject">
-                            <div className="title">Subject #4</div>
-                            <div className="subject-vote">
-                                <button className="vote-btn">Vote</button>
-                            </div>
-                        </div>
+                        <Subjects data={subjects} ethPrice={VOTE_ETH_PRICE} />
                     </div>
                 </div>
             </div>
