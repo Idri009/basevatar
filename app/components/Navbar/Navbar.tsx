@@ -2,17 +2,26 @@
 
 import classes from "./Navbar.module.scss";
 import { LucideMenu } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
-import { useAccount } from "wagmi";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+    const { data: session } = useSession();
     //
     const { open } = useWeb3Modal();
-    const { address, isConnected } = useAccount();
     //
     const menuRef = useRef<HTMLDivElement>(null);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if (session?.address) {
+            router.refresh();
+        }
+    }, [session]);
 
     return (
         <nav className={classes.navbar}>
@@ -56,13 +65,14 @@ const Navbar = () => {
                                 <button
                                     onClick={() => open()}
                                     className={`border-2 py-2 px-2 ${
-                                        isConnected
+                                        session?.address
                                             ? "bg-white text-black hover:bg-gray-200"
                                             : "bg-black text-white hover:bg-white hover:text-black"
                                     } border-white `}
                                 >
-                                    {isConnected
-                                        ? address && `${address.slice(0, 4)}...${address.slice(-4)}`
+                                    {session?.address
+                                        ? session?.address &&
+                                          `${session?.address.slice(0, 4)}...${session?.address.slice(-4)}`
                                         : "CONNECT WALLET"}
                                 </button>
                             </li>

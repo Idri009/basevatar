@@ -1,13 +1,14 @@
 "use client";
 
-import { ReactNode } from "react";
-import { config, projectId } from "../config/wagmi";
+import { ReactNode, useEffect } from "react";
+import { config, projectId } from "../config/wallet-connect/wagmiConfig";
 
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { State, WagmiProvider } from "wagmi";
+import siweConfig from "@/app/config/wallet-connect/siweConfig";
 // Setup queryClient
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ createWeb3Modal({
     enableAnalytics: true, // Optional - defaults to your Cloud configuration
     themeMode: "dark", // Optional - defaults to your Cloud configuration
     allWallets: "HIDE",
+    siweConfig,
 });
 
 export default function Web3ModalProvider({ children, initialState }: { children: ReactNode; initialState?: State }) {
