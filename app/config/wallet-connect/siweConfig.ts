@@ -50,7 +50,7 @@ const siweConfig = createSIWEConfig({
     signOut: async () => {
         try {
             await signOut({
-                redirect: true,
+                redirect: false,
                 callbackUrl: "/",
             });
 

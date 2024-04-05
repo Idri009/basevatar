@@ -18,9 +18,7 @@ const Navbar = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if (session?.address) {
-            router.refresh();
-        }
+        router.refresh();
     }, [session, router]);
 
     return (
