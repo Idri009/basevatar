@@ -1,6 +1,9 @@
 "use client";
 
 import { ReactNode, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import { config, projectId } from "../config/wallet-connect/wagmiConfig";
 
 import { createWeb3Modal } from "@web3modal/wagmi/react";
@@ -26,6 +29,16 @@ createWeb3Modal({
 });
 
 export default function Web3ModalProvider({ children, initialState }: { children: ReactNode; initialState?: State }) {
+    const { data: session } = useSession();
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if (session === undefined) return;
+        router.refresh();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [session?.address, router]);
+
     return (
         <WagmiProvider config={config} initialState={initialState}>
             <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

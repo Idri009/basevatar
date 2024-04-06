@@ -2,11 +2,10 @@
 
 import classes from "./Navbar.module.scss";
 import { LucideMenu } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 const Navbar = () => {
     const { data: session } = useSession();
@@ -14,12 +13,6 @@ const Navbar = () => {
     const { open } = useWeb3Modal();
     //
     const menuRef = useRef<HTMLDivElement>(null);
-
-    const router = useRouter();
-
-    useEffect(() => {
-        router.refresh();
-    }, [session, router]);
 
     return (
         <nav className={classes.navbar}>
