@@ -2,15 +2,19 @@
     @apply py-8;
 
     .vote-card {
-        @apply bg-zinc-800 rounded;
-        @apply py-4 px-4 mt-8;
+        @apply bg-black border-2 border-white;
+        @apply py-6 px-4 mt-8;
 
         .vote-btn {
-            @apply w-full py-2 text-base font-bold rounded-md;
-            @apply bg-zinc-600 text-white;
+            @apply w-full py-2 text-base font-bold mt-2;
+            @apply bg-white text-black;
             @apply transition-colors duration-200;
             &:hover {
-                @apply bg-zinc-500;
+                @apply bg-gray-300;
+            }
+
+            &:disabled {
+                @apply bg-gray-300 hover:cursor-not-allowed;
             }
         }
     }

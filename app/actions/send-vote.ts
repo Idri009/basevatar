@@ -2,7 +2,7 @@
 
 import { prisma } from "@/app/db";
 
-export async function sendVote({ id }: { id: string }) {
+export async function sendVote({ id, walletAddress }: { id: string; walletAddress: string }) {
     const updatedData = await prisma.votes.update({
         where: {
             id,
@@ -14,5 +14,12 @@ export async function sendVote({ id }: { id: string }) {
         },
     });
 
-    return updatedData;
+    await prisma.voteLogs.create({
+        data: {
+            vote_id: id,
+            wallet: walletAddress,
+        },
+    });
+
+    return { updatedData };
 }
