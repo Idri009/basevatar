@@ -4,6 +4,7 @@ import { useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
 import { parseEther } from "viem";
 import { sendVote } from "@/app/actions/send-vote";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
 
 interface ISubject {
@@ -20,7 +21,7 @@ interface ISubjectProps {
 const Subjects = ({ data, ethPrice }: ISubjectProps) => {
     const { data: hash, sendTransaction } = useSendTransaction();
 
-    const [subjects, setSubjects] = useState<ISubject[]>(data);
+    const router = useRouter();
 
     const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
         hash,
@@ -46,19 +47,8 @@ const Subjects = ({ data, ethPrice }: ISubjectProps) => {
             });
         }
         if (isConfirmed) {
-            sendVote({ id: subjectId }).then((val) => {
-                setSubjects((prev) =>
-                    prev.map((subject) => {
-                        if (subject.id === val.id) {
-                            return {
-                                ...subject,
-                                count: val.count,
-                            };
-                        }
-                        return subject;
-                    })
-                );
-            });
+            sendVote({ id: subjectId });
+            router.refresh();
 
             toast("Transaction confirmed", {
                 position: "bottom-right",
@@ -66,11 +56,11 @@ const Subjects = ({ data, ethPrice }: ISubjectProps) => {
                 transition: Bounce,
             });
         }
-    }, [isConfirming, isConfirmed, subjectId]);
+    }, [isConfirming, isConfirmed, subjectId, router]);
 
     return (
         <>
-            {subjects.map((subject, index) => (
+            {data.map((subject, index) => (
                 <div className="vote-card subject" key={index}>
                     <div className="title">Theme: {subject.value[0]}</div>
                     <div className="subject-vote">

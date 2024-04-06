@@ -4,6 +4,7 @@ import { useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
 import { parseEther } from "viem";
 import { sendVote } from "@/app/actions/send-vote";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Bounce, toast } from "react-toastify";
 
 interface IColor {
@@ -20,7 +21,7 @@ interface IColorProps {
 const Colors = ({ data, ethPrice }: IColorProps) => {
     const { data: hash, sendTransaction } = useSendTransaction();
 
-    const [colors, setColors] = useState<IColor[]>(data);
+    const router = useRouter();
 
     const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
         hash,
@@ -46,28 +47,18 @@ const Colors = ({ data, ethPrice }: IColorProps) => {
             });
         }
         if (isConfirmed) {
-            sendVote({ id: colorId }).then((val) => {
-                setColors((prev) =>
-                    prev.map((color) => {
-                        if (color.id === val.id) {
-                            return {
-                                ...color,
-                                count: val.count,
-                            };
-                        }
-                        return color;
-                    })
-                );
-            });
+            sendVote({ id: colorId });
+            router.refresh();
+
             toast("Transaction confirmed", {
                 position: "bottom-right",
                 theme: "dark",
                 transition: Bounce,
             });
         }
-    }, [isConfirming, isConfirmed, setColorId, colorId]);
+    }, [isConfirming, isConfirmed, router, colorId]);
 
-    return colors.map((color, index) => (
+    return data.map((color, index) => (
         <div className="vote-card color-palette" key={index}>
             <div className="colors">
                 {color.value.map((hex: string, index: number) => (
