@@ -16,16 +16,16 @@ const Page = async () => {
         <section className="section-mint">
             <div className="container">
                 <div className="row flex-wrap-reverse gap-y-8 md:gap-y-0">
-                    <div className="md:col-6">
+                    <div className="md:col-4">
                         <Image
                             src={item?.image_url || ""}
-                            width={500}
-                            height={250}
+                            width={1000}
+                            height={1000}
                             alt="intro-img-1"
                             className="rounded"
                         />
                     </div>
-                    <div className="md:col-6 mint">
+                    <div className="md:col-8 mint">
                         <h3 className="mint-title">{item?.title}</h3>
                         <div className="color-palette">
                             <div className="color" style={{ backgroundColor: "#FFD700" }}></div>
@@ -44,7 +44,7 @@ const Page = async () => {
                             </p>
                         </div>
 
-                        <div className="mint-button">
+                        <div className="mint-button mt-4">
                             <button className="btn btn-primary">MINT</button>
                             <span>0.0026 ETH • 468 MINTED</span>
                         </div>
