@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import srcIntroImg1 from "../assets/img/intro-img-1.png";
-import srcIntroImg2 from "../assets/img/intro-img-2.png";
-import srcIntroImg3 from "../assets/img/intro-img-3.png";
-import srcIntroImg4 from "../assets/img/intro-img-4.png";
+import srcIntroImg1 from "@/app/assets/img/intro-img-1.png";
+import srcIntroImg2 from "@/app/assets/img/intro-img-2.png";
+import srcIntroImg3 from "@/app/assets/img/intro-img-3.png";
+import srcIntroImg4 from "@/app/assets/img/intro-img-4.png";
 
 export default function Home() {
     return (
@@ -23,8 +23,12 @@ export default function Home() {
                         </p>
 
                         <div className="mt-8 links">
-                            <Link href="/draw">Start Drawing</Link>
-                            <Link href="/earn">Earn Points</Link>
+                            <Link className="btn" href="/draw">
+                                Start Drawing
+                            </Link>
+                            <Link className="btn" href="/earn">
+                                Earn Points
+                            </Link>
                         </div>
                     </div>
                     <div className="lg:col-6">

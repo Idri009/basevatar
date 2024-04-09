@@ -1,7 +1,7 @@
 import Image from "next/image";
 import CountDown from "./components/CountDown";
 
-import { prisma } from "@/app/db";
+import { prisma } from "@/app/lib/db";
 
 const Page = async () => {
     const currDate = new Date();
@@ -45,7 +45,7 @@ const Page = async () => {
                         </div>
 
                         <div className="mint-button mt-4">
-                            <button className="btn btn-primary">MINT</button>
+                            <button>MINT</button>
                             <span>0.0026 ETH • 468 MINTED</span>
                         </div>
                     </div>
