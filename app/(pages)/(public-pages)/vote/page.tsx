@@ -4,8 +4,6 @@ import authOptions from "@/app/api/auth/[...nextauth]/options";
 
 import Votes from "./components/Votes";
 
-const VOTE_ETH_PRICE = "0.0002";
-
 const Page = async () => {
     const session = await getServerSession(authOptions);
 
@@ -37,7 +35,7 @@ const Page = async () => {
                     <p className="subtitle">
                         Vote for the colors and themes you want to see in the next day&apos;s theme.
                     </p>
-                    <p className="subtitle">Each vote costs {VOTE_ETH_PRICE} ETH.</p>
+                    <p className="subtitle">Each vote costs {process.env.NEXT_PUBLIC_VOTE_PRICE} ETH.</p>
                 </div>
                 <div className="row gx-8">
                     <div className="sm:col-6 lg:col-4">
@@ -45,7 +43,7 @@ const Page = async () => {
                             type="color"
                             data={colors}
                             walletAddress={session?.address || ""}
-                            ethPrice={VOTE_ETH_PRICE}
+                            ethPrice={process.env.NEXT_PUBLIC_VOTE_PRICE ?? "0.00020"}
                         />
                     </div>
                     <div className="sm:col-6 lg:col-4">
@@ -53,7 +51,7 @@ const Page = async () => {
                             type="theme"
                             data={themes}
                             walletAddress={session?.address || ""}
-                            ethPrice={VOTE_ETH_PRICE}
+                            ethPrice={process.env.NEXT_PUBLIC_VOTE_PRICE ?? "0.00020"}
                         />
                     </div>
                 </div>

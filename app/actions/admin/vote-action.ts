@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { voteValidationSchema } from "@/app/lib/validationSchemas";
 import { TFormState } from "@/app/types";
-import checkAdmin from "@/app/utils/checkSession";
+import { checkAdmin } from "@/app/utils/checkSession";
 
 export default async function voteAction(prevState: TFormState, formData: FormData): Promise<TFormState> {
     //

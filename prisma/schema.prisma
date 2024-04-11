@@ -48,5 +48,6 @@ model voteLogs {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   wallet     String
   vote_id    String
+  hash       String
   created_at DateTime @default(now()) @db.Date
 }

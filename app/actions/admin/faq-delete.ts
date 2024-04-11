@@ -2,7 +2,7 @@
 
 import { prisma } from "@/app/lib/db";
 import { redirect } from "next/navigation";
-import checkAdmin from "@/app/utils/checkSession";
+import { checkAdmin } from "@/app/utils/checkSession";
 
 export async function faqDelete(id: string) {
     //

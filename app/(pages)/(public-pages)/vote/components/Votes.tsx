@@ -30,7 +30,7 @@ const Votes = ({ data, type, walletAddress, ethPrice }: IVoteProps) => {
         setVoteId(id);
 
         sendTransaction({
-            to: "0x85C75c50E101623478205E5B7E38e79e982ad6e8",
+            to: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as "0x",
             value: parseEther(ethPrice),
         });
     };
@@ -44,7 +44,8 @@ const Votes = ({ data, type, walletAddress, ethPrice }: IVoteProps) => {
             });
         }
         if (isConfirmed) {
-            sendVote({ id: voteId, walletAddress });
+            sendVote({ id: voteId, hash: hash as string });
+
             router.refresh();
 
             toast("Transaction confirmed", {
@@ -53,7 +54,7 @@ const Votes = ({ data, type, walletAddress, ethPrice }: IVoteProps) => {
                 transition: Bounce,
             });
         }
-    }, [isConfirming, isConfirmed, voteId, router, walletAddress]);
+    }, [isConfirming, isConfirmed, voteId, router, walletAddress, hash]);
 
     if (type === "color") {
         return data.map((color, index) => (
