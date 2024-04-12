@@ -1,31 +1,54 @@
 "use client";
 
 import { ReactNode, useEffect, useRef, useState } from "react";
-import CanvasContext, { ICanvasContext } from "./CanvasContext";
+import CanvasContext, { ICanvasContext, TCanvasDatas } from "./CanvasContext";
+import CryptoJS from "crypto-js";
 
 const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
     //
+    const _key = process.env.NEXT_PUBLIC_LOCALSTORAGE_KEY ?? "secret_key";
     const canvas = useRef<HTMLCanvasElement>(null);
-    const [canvasWidth, setCanvasWidth] = useState(300);
-    const [canvasHeight, setCanvasHeight] = useState(300);
-    const [pixelSize, setPixelSize] = useState(5);
-    //
 
-    const [pixelData, setPixelData] = useState<Record<string, string>>({});
-    const [currentColor, setCurrentColor] = useState<string>("black");
-    const [history, setHistory] = useState<Record<string, string>[]>([]);
+    const [canvasDatas, setCanvasDatas] = useState<TCanvasDatas>({
+        pixelData: {},
+        history: [],
+        backgroundColor: "white",
+        currentColor: "black",
+    });
+
+    const [availableColors, setavAilableColors] = useState<string[]>([
+        "#000000",
+        "#ff0000",
+        "#00ff00",
+        "#0000ff",
+        "#ff00ff",
+        "#00ffff",
+    ]);
+
+    const [canvasWidth, setCanvasWidth] = useState(450);
+    const [canvasHeight, setCanvasHeight] = useState(450);
+    const [pixelSize, setPixelSize] = useState(7.5);
 
     useEffect(() => {
-        setHistory(JSON.parse(localStorage.getItem("history") || "[]"));
-        setPixelData(JSON.parse(localStorage.getItem("pixels") || "{}"));
-    }, []);
+        setCanvasDatas(
+            JSON.parse(
+                CryptoJS.AES.decrypt(localStorage.getItem("basecanvas") ?? "", _key).toString(CryptoJS.enc.Utf8) ||
+                    JSON.stringify({
+                        pixelData: {},
+                        history: [],
+                        backgroundColor: availableColors[1],
+                        currentColor: availableColors[0],
+                    })
+            )
+        );
+    }, [availableColors, _key]);
 
     useEffect(() => {
         if (!canvas || !canvas.current) return;
         const ctx = canvas.current.getContext("2d");
         if (!ctx) return;
 
-        ctx.fillStyle = "white";
+        ctx.fillStyle = canvasDatas.backgroundColor;
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
         ctx.lineWidth = 1;
@@ -45,36 +68,68 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
             ctx.stroke();
         }
 
-        for (const [key, value] of Object.entries(pixelData)) {
+        for (const [key, value] of Object.entries(canvasDatas.pixelData)) {
             const [x, y] = key.split(",").map((val) => parseInt(val));
             ctx.fillStyle = value;
             ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
         }
-    }, [canvas, pixelData, pixelSize, canvasWidth, canvasHeight]);
+    }, [canvas, canvasDatas.pixelData, pixelSize, canvasWidth, canvasHeight, canvasDatas.backgroundColor]);
 
-    const changeColor = (color: string) => {
-        setCurrentColor(color);
+    const addPixel = (data: Record<string, string>) => {
+        setCanvasDatas((prev) => {
+            const canvasData = JSON.stringify({ ...prev, pixelData: { ...prev.pixelData, ...data } });
+            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+
+            return { ...prev, pixelData: { ...prev.pixelData, ...data } };
+        });
     };
 
     const addHistory = (data: Record<string, string>) => {
-        setHistory((prev) => {
+        setCanvasDatas((prev) => {
             const last = { ...data };
-            const localHistory = JSON.stringify([...prev, last]);
-            localStorage.setItem("history", localHistory);
-            return [...prev, last];
+            const canvasData = JSON.stringify({ ...prev, history: [...prev.history, last] });
+            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            return { ...prev, history: [...prev.history, last] };
+        });
+    };
+
+    const changeBackgroundColor = (color: string) => {
+        setCanvasDatas((prev) => {
+            const canvasData = JSON.stringify({ ...prev, backgroundColor: color });
+            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            return { ...prev, backgroundColor: color };
+        });
+    };
+
+    const changeColor = (color: string) => {
+        setCanvasDatas((prev) => {
+            const canvasData = JSON.stringify({ ...prev, currentColor: color });
+            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            return { ...prev, currentColor: color };
         });
     };
 
     const undoPixels = (last: Record<string, string>) => {
-        setPixelData((prev) => {
-            const next = { ...prev };
+        setCanvasDatas((prev) => {
+            const next = { ...prev, pixelData: { ...prev.pixelData } };
             Object.keys(last).forEach((key) => {
-                delete next[key];
+                delete next.pixelData[key];
             });
-            const pixels = JSON.stringify(next);
-            localStorage.setItem("pixels", pixels);
-
+            const canvasData = JSON.stringify(next);
+            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
             return next;
+        });
+    };
+
+    const updateAvailableColors = (colors: string[]) => {
+        setavAilableColors(colors);
+    };
+
+    const clearCanvas = () => {
+        setCanvasDatas((prev) => {
+            const canvasData = JSON.stringify({ ...prev, pixelData: {}, history: [] });
+            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            return { ...prev, pixelData: {}, history: [] };
         });
     };
 
@@ -90,30 +145,16 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         setCanvasHeight((prev) => prev / 1.2);
     };
 
-    const addPixel = (data: Record<string, string>) => {
-        setPixelData((prev) => {
-            const pixels = JSON.stringify({ ...prev, ...data });
-            localStorage.setItem("pixels", pixels);
-            return { ...prev, ...data };
-        });
-    };
-
-    const clearCanvas = () => {
-        setPixelData({});
-        localStorage.setItem("pixels", "{}");
-        localStorage.setItem("history", "[]");
-    };
-
     const values: ICanvasContext = {
         canvas,
+        canvasDatas,
         canvasWidth,
         canvasHeight,
+        changeBackgroundColor,
+        updateAvailableColors,
         pixelSize,
-        pixelData,
         addPixel,
-        currentColor,
         changeColor,
-        history,
         addHistory,
         undoPixels,
         zoomIn,

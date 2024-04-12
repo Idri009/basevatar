@@ -2,16 +2,23 @@
 
 import { createContext, RefObject } from "react";
 
+export type TCanvasDatas = {
+    pixelData: Record<string, string>;
+    history: Record<string, string>[];
+    backgroundColor: string;
+    currentColor: string;
+};
+
 export interface ICanvasContext {
     canvas: RefObject<HTMLCanvasElement> | null;
+    canvasDatas: TCanvasDatas;
+    updateAvailableColors: (colors: string[]) => void;
     canvasWidth: number;
     canvasHeight: number;
+    changeBackgroundColor: (color: string) => void;
     pixelSize: number;
-    pixelData: Record<string, string>;
     addPixel: (data: Record<string, string>) => void;
-    currentColor: string;
     changeColor: (color: string) => void;
-    history: Record<string, string>[];
     addHistory: (data: Record<string, string>) => void;
     undoPixels: (last: Record<string, string>) => void;
     zoomIn: () => void;
@@ -21,14 +28,19 @@ export interface ICanvasContext {
 
 const CanvasContext = createContext<ICanvasContext>({
     canvas: null,
+    canvasDatas: {
+        pixelData: {},
+        history: [],
+        backgroundColor: "#ffffff",
+        currentColor: "#000000",
+    },
+    updateAvailableColors: () => {},
     canvasWidth: 400,
     canvasHeight: 400,
+    changeBackgroundColor: () => {},
     pixelSize: 1,
-    pixelData: {},
     addPixel: () => {},
-    currentColor: "black",
     changeColor: () => {},
-    history: [],
     addHistory: () => {},
     undoPixels: () => {},
     zoomIn: () => {},

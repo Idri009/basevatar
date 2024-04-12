@@ -1,10 +1,23 @@
 import authOptions from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth/next";
+import { prisma } from "@/app/lib/db";
 import Canvas from "@/app/components/Canvas/Canvas";
 import CanvasContextProvider from "@/app/providers/CanvasContextProvider";
 
 const Page = async () => {
     const session = await getServerSession(authOptions);
+
+    const theme = await prisma.settings.findFirst({
+        where: {
+            key: "theme",
+        },
+    });
+
+    const colors = await prisma.settings.findFirst({
+        where: {
+            key: "color",
+        },
+    });
 
     return (
         <section className="section-draw py-8">
@@ -19,7 +32,7 @@ const Page = async () => {
                     )}
                     {session && (
                         <CanvasContextProvider>
-                            <Canvas />
+                            <Canvas theme={theme!.value} colors={colors!.value} />
                         </CanvasContextProvider>
                     )}
                 </div>

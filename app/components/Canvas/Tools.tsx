@@ -5,15 +5,13 @@ import classes from "./Tools.module.scss";
 import { LucideImage, LucideMinus, LucidePlus, LucideSave, LucideTrash2, LucideUndo } from "lucide-react";
 import { useState } from "react";
 
-const COLORS = ["black", "white", "red", "green", "blue", "#d5b549"];
+const Tools = ({ colors }: { colors: string[] }) => {
+    const { canvasDatas, changeColor, undoPixels, zoomIn, zoomOut, clearCanvas, changeBackgroundColor } = useCanvas();
 
-const Palette = () => {
-    const { changeColor, history, undoPixels, zoomIn, zoomOut, clearCanvas } = useCanvas();
-
-    const [activeColor, setActiveColor] = useState<string>(COLORS[0]);
+    const [activeColor, setActiveColor] = useState<string>(canvasDatas.currentColor);
 
     const undoHandler = () => {
-        const last = history.pop();
+        const last = canvasDatas.history.pop();
         if (!last) return;
 
         undoPixels(last);
@@ -37,12 +35,18 @@ const Palette = () => {
                 <button>
                     <LucideImage size={24} />
                 </button>
-                <button onClick={clearCanvas}>
+                <button
+                    onClick={() => {
+                        confirm("Are you sure you want to clear the canvas?") && clearCanvas();
+                    }}
+                >
                     <LucideTrash2 size={24} />
                 </button>
             </div>
+
             <div className={classes.colors}>
-                {COLORS.map((color) => (
+                <div>Colors</div>
+                {colors.map((color) => (
                     <div
                         key={color}
                         className={`${classes.color} ${activeColor === color ? classes.active : ""}`}
@@ -54,8 +58,21 @@ const Palette = () => {
                     />
                 ))}
             </div>
+            <div className={classes.colors}>
+                <div>Background</div>
+                {colors.map((color) => (
+                    <div
+                        key={color}
+                        className={`${classes.color}`}
+                        style={{ backgroundColor: color }}
+                        onClick={() => {
+                            changeBackgroundColor(color);
+                        }}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
 
-export default Palette;
+export default Tools;
