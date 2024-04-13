@@ -1,10 +1,13 @@
 import { getTransaction } from "wagmi/actions";
-import { getWalletAddress } from "@/app/utils/checkSession";
-import { config } from "@/app/config/wallet-connect/wagmiConfig";
+import { config } from "../config/wagmi";
+import { getSession } from "./sessionHelpers";
 
-export async function checkTransaction(hash: string) {
-    const walletAddress = await getWalletAddress();
+export async function isTransactionValid(hash: string) {
+    //
+    const session = await getSession();
+    if (!session?.address) throw new Error("No session found");
 
+    const walletAddress = session?.address;
     const transaction = await getTransaction(config, {
         hash: hash as "0x",
     });
