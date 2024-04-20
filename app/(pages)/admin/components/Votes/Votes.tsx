@@ -1,5 +1,6 @@
 import { IVote } from "@/app/types";
 import classes from "./Votes.module.scss";
+import VoteDeleteButton from "./VoteDeleteButton";
 
 const Votes = ({ data }: { data: IVote[] }) => {
     return (
@@ -28,6 +29,9 @@ const Votes = ({ data }: { data: IVote[] }) => {
                                 ))}
                             </div>
                         )}
+                        <div className="mt-4">
+                            <VoteDeleteButton voteId={vote.id}>Delete</VoteDeleteButton>
+                        </div>
                     </div>
                 );
             })}
