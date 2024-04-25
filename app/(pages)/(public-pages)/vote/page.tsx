@@ -16,6 +16,7 @@ const Page = async () => {
         where: {
             type: "color",
             day: Number(settings?.value) + 1 ?? 1,
+            isDeleted: false,
         },
     });
 
@@ -23,6 +24,7 @@ const Page = async () => {
         where: {
             type: "theme",
             day: Number(settings?.value) + 1 ?? 1,
+            isDeleted: false,
         },
     });
 

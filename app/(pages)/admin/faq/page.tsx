@@ -6,6 +6,9 @@ const Page = async () => {
         orderBy: {
             order: "asc",
         },
+        where: {
+            isDeleted: false,
+        },
     });
 
     return (

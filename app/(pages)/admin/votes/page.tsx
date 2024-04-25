@@ -25,6 +25,7 @@ const Page = async ({
     const votes = await prisma.votes.findMany({
         where: {
             day: parseInt(day),
+            isDeleted: false,
         },
         orderBy: {
             id: "asc",

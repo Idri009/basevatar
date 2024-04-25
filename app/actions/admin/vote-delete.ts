@@ -8,11 +8,18 @@ export async function voteDelete(id: string, day: string) {
     //
     if (!(await isAdmin())) return;
 
-    await prisma.votes.delete({
-        where: {
-            id: id,
-        },
-    });
+    try {
+        await prisma.votes.update({
+            where: {
+                id: id,
+            },
+            data: {
+                isDeleted: true,
+            },
+        });
+    } catch (e) {
+        console.log(e);
+    }
 
     redirect("/admin/votes?day=" + day);
 }

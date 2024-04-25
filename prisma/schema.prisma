@@ -14,10 +14,11 @@ model settings {
 }
 
 model faq {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  content String
-  order   Int
-  title   String
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  order     Int
+  title     String
+  isDeleted Boolean @default(false)
 }
 
 model gallery {
@@ -28,6 +29,7 @@ model gallery {
   image_url   String
   opensea_url String
   title       String
+  isDeleted   Boolean  @default(false)
 }
 
 enum voteTypes {
@@ -36,12 +38,13 @@ enum voteTypes {
 }
 
 model votes {
-  id    String    @id @default(auto()) @map("_id") @db.ObjectId
-  count Int       @default(0)
-  date  DateTime  @db.Date
-  type  voteTypes
-  value String[]
-  day   Int
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  count     Int       @default(0)
+  date      DateTime  @db.Date
+  type      voteTypes
+  value     String[]
+  day       Int
+  isDeleted Boolean   @default(false)
 }
 
 model voteLogs {

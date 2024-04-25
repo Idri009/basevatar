@@ -6,6 +6,9 @@ const Page = async () => {
         orderBy: {
             order: "asc",
         },
+        where: {
+            isDeleted: false,
+        },
     });
 
     return (
@@ -20,7 +23,7 @@ const Page = async () => {
                         </p>
                     </div>
 
-                    <Faq data={items} />
+                    <Faq data={items ?? {}} />
                 </div>
             </div>
         </section>
