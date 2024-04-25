@@ -40,7 +40,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
                     decryptedData.hasOwnProperty("backgroundColor") &&
                     decryptedData.hasOwnProperty("currentColor")
                 )
-                    canvasData = JSON.parse(decryptedData) || canvasData;
+                    canvasData = decryptedData || canvasData;
             }
 
             setCanvasDatas(canvasData);

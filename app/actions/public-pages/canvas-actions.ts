@@ -10,5 +10,11 @@ export async function encryptCanvasData(data: TCanvasDatas) {
 }
 
 export async function decryptCanvasData(data: string) {
-    return CryptoJS.AES.decrypt(data, _key).toString(CryptoJS.enc.Utf8);
+    try {
+        const bytes = CryptoJS.AES.decrypt(data, _key);
+        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    } catch (e) {
+        console.error(e);
+        return {};
+    }
 }
