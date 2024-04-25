@@ -28,6 +28,7 @@ export interface ICanvasContext {
     changeColor: (color: string) => void;
     zoomIn: () => void;
     zoomOut: () => void;
+    updateLocalStorage: () => void;
 }
 
 const CanvasContext = createContext<ICanvasContext>({
@@ -53,6 +54,7 @@ const CanvasContext = createContext<ICanvasContext>({
     changeColor: () => {},
     zoomIn: () => {},
     zoomOut: () => {},
+    updateLocalStorage: () => {},
 });
 
 export default CanvasContext;

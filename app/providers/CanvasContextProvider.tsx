@@ -2,11 +2,10 @@
 
 import { ReactNode, useEffect, useRef, useState } from "react";
 import CanvasContext, { ICanvasContext, TCanvasDatas, TCanvasProperties } from "./CanvasContext";
-import CryptoJS from "crypto-js";
+import { decryptCanvasData, encryptCanvasData } from "../actions/public-pages/canvas-actions";
 
 const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
     //
-    const _key = process.env.NEXT_PUBLIC_LOCALSTORAGE_KEY ?? "secret_key";
     const canvas = useRef<HTMLCanvasElement>(null);
 
     const [canvasProperties, setCanvasProperties] = useState<TCanvasProperties>({
@@ -24,18 +23,25 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
     });
 
     useEffect(() => {
-        setCanvasDatas(
-            JSON.parse(
-                CryptoJS.AES.decrypt(localStorage.getItem("basecanvas") ?? "", _key).toString(CryptoJS.enc.Utf8) ||
-                    JSON.stringify({
-                        pixelData: {},
-                        history: [],
-                        backgroundColor: canvasProperties.availableColors[0],
-                        currentColor: canvasProperties.availableColors[1],
-                    })
-            )
-        );
-    }, [canvasProperties.availableColors, _key]);
+        const decryptLocalStorage = async () => {
+            let canvasData = {
+                pixelData: {},
+                history: [],
+                backgroundColor: canvasProperties.availableColors[0],
+                currentColor: canvasProperties.availableColors[1],
+            };
+
+            if (localStorage.getItem("basecanvas")) {
+                const encryptedData = localStorage.getItem("basecanvas") ?? "";
+                const decryptedData = await decryptCanvasData(encryptedData);
+                canvasData = JSON.parse(decryptedData) || canvasData;
+            }
+
+            setCanvasDatas(canvasData);
+        };
+
+        decryptLocalStorage();
+    }, [canvasProperties.availableColors]);
 
     useEffect(() => {
         //
@@ -87,8 +93,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
             if (pixelData[dataKey][pixelData[dataKey].length - 1] !== dataValue || !dataValue) {
                 pixelData[dataKey] = pixelData[dataKey] ? [...pixelData[dataKey], dataValue] : [dataValue];
             }
-            const canvasData = JSON.stringify({ ...prev, pixelData: { ...pixelData } });
-            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+
             return { ...prev, pixelData: { ...pixelData } };
         });
     };
@@ -96,8 +101,8 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
     const addHistory = (data: Record<string, string>) => {
         setCanvasDatas((prev) => {
             const last = { ...data };
-            const canvasData = JSON.stringify({ ...prev, history: [...prev.history, last] });
-            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            const canvasData = { ...prev, history: [...prev.history, last] };
+            updateLocalStorage(canvasData);
             return { ...prev, history: [...prev.history, last] };
         });
     };
@@ -117,8 +122,8 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
                     pixelData[key].pop();
                 }
             });
-            const canvasData = JSON.stringify({ ...prev, history: history.slice(0, -1), pixelData: { ...pixelData } });
-            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            const canvasData = { ...prev, history: history.slice(0, -1), pixelData: { ...pixelData } };
+            updateLocalStorage(canvasData);
             return {
                 ...prev,
                 history: history.slice(0, -1),
@@ -126,29 +131,29 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
             };
         });
     };
-    /* Undo and Clear Function */
 
     const clearCanvas = () => {
         setCanvasDatas((prev) => {
-            const canvasData = JSON.stringify({ ...prev, pixelData: {}, history: [] });
-            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            const canvasData = { ...prev, pixelData: {}, history: [] };
+            updateLocalStorage(canvasData);
             return { ...prev, pixelData: {}, history: [] };
         });
     };
+    /* Undo and Clear Function */
 
     /* Change Background Color and Color Functions */
     const changeBackgroundColor = (color: string) => {
         setCanvasDatas((prev) => {
-            const canvasData = JSON.stringify({ ...prev, backgroundColor: color });
-            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            const canvasData = { ...prev, backgroundColor: color };
+            updateLocalStorage(canvasData);
             return { ...prev, backgroundColor: color };
         });
     };
 
     const changeColor = (color: string) => {
         setCanvasDatas((prev) => {
-            const canvasData = JSON.stringify({ ...prev, currentColor: color });
-            localStorage.setItem("basecanvas", CryptoJS.AES.encrypt(canvasData, _key).toString());
+            const canvasData = { ...prev, currentColor: color };
+            updateLocalStorage(canvasData);
             return { ...prev, currentColor: color };
         });
     };
@@ -175,6 +180,14 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
+    const updateLocalStorage = async (data?: TCanvasDatas) => {
+        if (!data) {
+            localStorage.setItem("basecanvas", await encryptCanvasData(canvasDatas));
+            return;
+        }
+        localStorage.setItem("basecanvas", await encryptCanvasData(data));
+    };
+
     const values: ICanvasContext = {
         canvas,
         canvasProperties,
@@ -188,6 +201,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         changeColor,
         zoomIn,
         zoomOut,
+        updateLocalStorage,
     };
 
     return <CanvasContext.Provider value={values}>{children}</CanvasContext.Provider>;

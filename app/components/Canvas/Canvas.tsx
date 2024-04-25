@@ -6,14 +6,21 @@ import { useEffect, useState } from "react";
 
 const Canvas = ({ theme, colors }: { theme: string; colors: string }) => {
     //
-    const { canvas, canvasDatas, canvasProperties, addPixel, addHistory, updateAvailableColors } = useCanvas();
-    const [isDrawing, setIsDrawing] = useState(false);
+    const { canvas, canvasDatas, canvasProperties, addPixel, addHistory, updateAvailableColors, updateLocalStorage } =
+        useCanvas();
+
+    const [isDrawing, setIsDrawing] = useState<boolean>(false);
     const [lastDraw, setLastDraw] = useState<Record<string, string>>({});
 
     useEffect(() => {
         updateAvailableColors(colors.split(","));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        updateLocalStorage();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDrawing]);
 
     const handleDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
         const x = Math.floor(e.nativeEvent.offsetX / canvasProperties.pixelSize);
