@@ -34,7 +34,13 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
             if (localStorage.getItem("basecanvas")) {
                 const encryptedData = localStorage.getItem("basecanvas") ?? "";
                 const decryptedData = await decryptCanvasData(encryptedData);
-                canvasData = JSON.parse(decryptedData) || canvasData;
+                if (
+                    decryptedData.hasOwnProperty("pixelData") &&
+                    decryptedData.hasOwnProperty("history") &&
+                    decryptedData.hasOwnProperty("backgroundColor") &&
+                    decryptedData.hasOwnProperty("currentColor")
+                )
+                    canvasData = JSON.parse(decryptedData) || canvasData;
             }
 
             setCanvasDatas(canvasData);
