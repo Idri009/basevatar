@@ -13,6 +13,7 @@ export type TCanvasProperties = {
     height: number;
     pixelSize: number;
     availableColors: string[];
+    zoom: number;
 };
 
 export interface ICanvasContext {
@@ -38,6 +39,7 @@ const CanvasContext = createContext<ICanvasContext>({
         height: 400,
         pixelSize: 1,
         availableColors: [],
+        zoom: 1,
     },
     canvasDatas: {
         pixelData: {},

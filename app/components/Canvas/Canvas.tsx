@@ -52,7 +52,6 @@ const Canvas = ({ theme, colors }: { theme: string; colors: string }) => {
             </div>
             <Tools colors={colors.split(",")} />
             <canvas
-                className="bg-gray-100"
                 ref={canvas}
                 width={canvasProperties.width}
                 height={canvasProperties.height}
@@ -60,6 +59,12 @@ const Canvas = ({ theme, colors }: { theme: string; colors: string }) => {
                 onMouseUp={() => (isDrawing ? handleLeave() : null)}
                 onMouseLeave={() => (isDrawing ? handleLeave() : null)}
                 onMouseMove={(e) => (isDrawing ? handleDraw(e) : null)}
+                style={{
+                    transform: `scale(${canvasProperties.zoom})`,
+                    transformOrigin: "top left",
+                    zIndex: -10,
+                    borderBottom: "20px solid #000",
+                }}
             />
         </>
     );

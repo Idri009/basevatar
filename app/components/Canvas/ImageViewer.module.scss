@@ -1,6 +1,6 @@
 .image-viewer {
     @apply absolute pointer-events-none;
-    @apply border-2 border-white rounded-lg;
+    @apply border-2 border-white rounded-lg z-10;
 
     .input {
         @apply flex justify-between items-center gap-4 px-4 py-2 pointer-events-auto;

@@ -15,6 +15,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         height: 360,
         pixelSize: 6,
         availableColors: ["#000000", "#ff0000", "#00ff00", "#0000ff"],
+        zoom: 1,
     });
 
     const [canvasDatas, setCanvasDatas] = useState<TCanvasDatas>({
@@ -60,20 +61,6 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         ctx.fillRect(0, 0, canvasProperties.width, canvasProperties.height);
         ctx.lineWidth = 1;
         ctx.strokeStyle = "rgba(0, 0, 0, 0.03)";
-
-        for (let x = 0; x < 100000; x += canvasProperties.pixelSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, canvasProperties.height);
-            ctx.stroke();
-        }
-
-        for (let y = 0; y < 100000; y += canvasProperties.pixelSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(canvasProperties.width, y);
-            ctx.stroke();
-        }
 
         for (const [key, value] of Object.entries(canvasDatas.pixelData)) {
             const [x, y] = key.split(",").map((val) => parseInt(val));
@@ -170,13 +157,13 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
     /* Zoom Functions */
     const zoomIn = () => {
         setCanvasProperties((prev) => {
-            return { ...prev, pixelSize: prev.pixelSize * 2.0, width: prev.width * 2.0, height: prev.height * 2.0 };
+            return { ...prev, zoom: prev.zoom * 1.1 };
         });
     };
 
     const zoomOut = () => {
         setCanvasProperties((prev) => {
-            return { ...prev, pixelSize: prev.pixelSize / 2.0, width: prev.width / 2.0, height: prev.height / 2.0 };
+            return { ...prev, zoom: prev.zoom / 1.1 };
         });
     };
     /* Zoom Functions */

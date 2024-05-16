@@ -7,7 +7,16 @@ import { useState } from "react";
 import ImageViewer from "./ImageViewer";
 
 const Tools = ({ colors }: { colors: string[] }) => {
-    const { canvasDatas, changeColor, undoPixels, zoomIn, zoomOut, clearCanvas, changeBackgroundColor } = useCanvas();
+    const {
+        canvasDatas,
+        canvasProperties,
+        changeColor,
+        undoPixels,
+        zoomIn,
+        zoomOut,
+        clearCanvas,
+        changeBackgroundColor,
+    } = useCanvas();
     const [activeColor, setActiveColor] = useState<string>(canvasDatas.currentColor);
     const [imageViewer, setImageViewer] = useState<boolean>(false);
 
@@ -20,6 +29,7 @@ const Tools = ({ colors }: { colors: string[] }) => {
 
     return (
         <div className={classes.tools}>
+            <div className="mt-2 text-sm font-bold">x{canvasProperties.zoom.toFixed(2)} zoom</div>
             <ImageViewer visible={imageViewer} />
             <div className={classes.settings}>
                 <button onClick={zoomIn}>
