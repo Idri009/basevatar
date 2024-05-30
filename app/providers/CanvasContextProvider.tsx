@@ -62,6 +62,13 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         ctx.lineWidth = 1;
         ctx.strokeStyle = "rgba(0, 0, 0, 0.03)";
 
+        for (let i = 0; i < canvasProperties.width; i += canvasProperties.pixelSize) {
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, canvasProperties.height);
+            ctx.stroke();
+        }
+
         for (const [key, value] of Object.entries(canvasDatas.pixelData)) {
             const [x, y] = key.split(",").map((val) => parseInt(val));
             if (!value.length) continue;
