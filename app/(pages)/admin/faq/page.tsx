@@ -1,33 +1,9 @@
-import { prisma } from "@/app/lib/db";
+import fetchFaq from "@/app/actions/common/fetch-faq";
 import Link from "next/link";
-
-const fetchData = async () => {
-    "use server";
-    try {
-        const faq = await prisma.faq.findMany({
-            orderBy: {
-                order: "asc",
-            },
-            where: {
-                isDeleted: false,
-            },
-        });
-
-        return {
-            faq,
-            error: false,
-        };
-    } catch (e: unknown) {
-        return {
-            faq: [],
-            error: true,
-        };
-    }
-};
 
 const Page = async () => {
     //
-    const { faq, error } = await fetchData();
+    const { items, error } = await fetchFaq();
 
     return (
         <section className="section-faq-admin">
@@ -42,7 +18,7 @@ const Page = async () => {
             </div>
             {error && <div className="error-message">Internal Server Error. Please try again later.</div>}
             <ul>
-                {faq.map((item) => (
+                {items.map((item) => (
                     <li key={item.id}>
                         <div className="question">
                             <h3 className="font-semibold">{item.title}</h3>

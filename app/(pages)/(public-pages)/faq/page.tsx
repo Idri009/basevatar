@@ -1,4 +1,4 @@
-import fetchFaq from "@/app/actions/public-pages/fetch-faq";
+import fetchFaq from "@/app/actions/common/fetch-faq";
 import Faq from "../../../components/Faq/Faq";
 import ServerErrorMessage from "@/app/components/common/ServerErrorMessage";
 
