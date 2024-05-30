@@ -26,10 +26,10 @@
                 @apply px-6 py-4 text-xl;
 
                 &:first-child {
-                    @apply bg-blue-500 hover:bg-blue-600  border-blue-600 mr-4 mb-6;
+                    @apply bg-blue-500 hover:bg-blue-600 hover:text-white  border-blue-600 mr-4 mb-6;
                 }
                 &:last-child {
-                    @apply border-gray-200 hover:border-blue-300;
+                    @apply border-gray-200 hover:border-black;
                 }
             }
         }
