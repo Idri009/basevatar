@@ -1,9 +1,14 @@
-import fetchFaq from "@/app/actions/common/fetch-faq";
+import { IFaq } from "@/app/types";
 import Faq from "../../../components/Faq/Faq";
-import ServerErrorMessage from "@/app/components/common/ServerErrorMessage";
 
 const Page = async () => {
-    const { items, error } = await fetchFaq();
+    const items: IFaq[] = [
+        {
+            title: "What is Lorem Ipsum?",
+            content:
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit Veritatis, exercitationem deserunt nemo ab praesentium.",
+        },
+    ];
 
     return (
         <section className="py-8">
@@ -18,7 +23,6 @@ const Page = async () => {
                     </div>
                     <Faq data={items ?? {}} />
                 </div>
-                {error && <ServerErrorMessage />}
             </div>
         </section>
     );

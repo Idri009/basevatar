@@ -18,9 +18,6 @@ export default async function Layout({
                                     <Link href="/admin">Dashboard</Link>
                                 </li>
                                 <li>
-                                    <Link href="/admin/faq">FAQ</Link>
-                                </li>
-                                <li>
                                     <Link href="/admin/votes">Votes</Link>
                                 </li>
                                 <li>

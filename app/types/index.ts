@@ -1,8 +1,6 @@
 export interface IFaq {
-    id: string;
-    content: string;
     title: string;
-    order: number;
+    content: string;
 }
 
 export interface IVote {
