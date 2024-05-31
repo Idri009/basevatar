@@ -13,14 +13,6 @@ model settings {
   value String
 }
 
-model faq {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  order     Int
-  title     String
-  isDeleted Boolean @default(false)
-}
-
 model gallery {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   colors      String[]
