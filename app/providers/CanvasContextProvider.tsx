@@ -3,6 +3,7 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import CanvasContext, { ICanvasContext, TCanvasDatas, TCanvasProperties } from "./CanvasContext";
 import CryptoJS from "crypto-js";
+import { uploadImageToServer } from "../actions/public-pages/canvas-actions";
 
 const _key = process.env.NEXT_PUBLIC_LOCALSTORAGE_KEY ?? "secret_key";
 
@@ -201,6 +202,14 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("basecanvas", await encryptCanvasData(data));
     };
 
+    const saveImageHandler = () => {
+        if(!canvas.current) return;
+        const canvasBase64 = canvas.current.toDataURL();
+        uploadImageToServer(canvasBase64).then((res) => {
+            console.log("Image uploaded to server", res);
+        });
+    };
+
     const values: ICanvasContext = {
         canvas,
         canvasProperties,
@@ -216,6 +225,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         zoomOut,
         updateDay,
         updateLocalStorage,
+        saveImageHandler
     };
 
     return <CanvasContext.Provider value={values}>{children}</CanvasContext.Provider>;
