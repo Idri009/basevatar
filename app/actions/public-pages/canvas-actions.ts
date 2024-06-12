@@ -1,7 +1,6 @@
 "use server";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { revalidatePath } from "next/cache";
 import { v4 as uuidv4 } from "uuid";
 import { prisma } from "@/app/lib/db";
 import { getSession } from "@/app/utils/sessionHelpers";
