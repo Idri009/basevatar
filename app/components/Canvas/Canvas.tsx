@@ -17,19 +17,21 @@ const Canvas = ({ theme, colors, day }: { theme: string; colors: string; day: st
         updateLocalStorage,
         clearCanvas,
         changeBackgroundColor,
+        changeColor
     } = useCanvas();
 
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
     const [lastDraw, setLastDraw] = useState<Record<string, string>>({});
 
+    // Clear canvas when changing day
+    // TODO: Fix this, it's not working as expected
     useEffect(() => {
-        if (canvasDatas.day === "") return;
-        if (canvasDatas.day !== day) {
-            clearCanvas();
-            changeBackgroundColor(colors.split(",")[0]);
-        }
+        if (canvasDatas.day === "" || canvasDatas.day === day) return;
+        clearCanvas();
+        changeBackgroundColor(colors.split(",")[0]);
+        changeColor(colors.split(",")[1]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [canvasDatas.day, day]);
+    }, [canvasDatas.day, colors]); 
 
     useEffect(() => {
         updateAvailableColors(colors.split(","));
