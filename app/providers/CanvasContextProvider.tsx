@@ -204,7 +204,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
 
     const saveImageHandler = () => {
         if(!canvas.current) return;
-        const canvasBase64 = canvas.current.toDataURL();
+        const canvasBase64 = canvas.current.toDataURL("image/jpeg");
         uploadImageToServer(canvasBase64).then((res) => {
             console.log("Image uploaded to server", res);
         });
