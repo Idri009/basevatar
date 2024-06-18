@@ -4,6 +4,7 @@ import path from "node:path";
 import { v4 as uuidv4 } from "uuid";
 import { prisma } from "@/app/lib/db";
 import { getSession } from "@/app/utils/sessionHelpers";
+import { postNewSavedImage } from "@/app/utils/slackHelpers";
 
 export async function uploadImageToServer(data: string) {
     const base64Image = data.split(";base64,").pop();
@@ -29,6 +30,9 @@ export async function uploadImageToServer(data: string) {
             isSelected: true,
         },
     });
+
+    //slack message
+    await postNewSavedImage(process.env.NEXT_PUBLIC_BASE_URL + url, userAddres, day.value);
 
     return url;
 }
