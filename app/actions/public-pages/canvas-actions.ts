@@ -19,5 +19,16 @@ export async function uploadImageToServer(data: string) {
     const imagePath = path.join(process.cwd(), "public", "images", day.value, `${uuidv4()}.jpg`);
     await fs.writeFile(imagePath, base64Image, "base64");
     const url = `/images/${day.value}/${path.basename(imagePath)}`;
+
+    //save image to db
+    await prisma.images.create({
+        data: {
+            day: +day.value,
+            url,
+            address: userAddres,
+            isSelected: true,
+        },
+    });
+
     return url;
 }
