@@ -12,22 +12,20 @@ export default function Home() {
                 <div className="row">
                     <div className="lg:col-6 intro">
                         <p className="primary-text">
-                            <span className="text-orange-300 font-semibold">Lorem ipsum dolor</span> <br />
-                            sit amet consectetur, elit.{" "}
-                            <span className="text-blue-400 font-semibold"> Nobis eligendi nam laborum</span> debitis
-                            voluptate,
-                            <span className="text-amber-500 font-semibold"> cum soluta minima</span>, et, ut blanditiis
-                            <span className="text-red-400 font-semibold"> deserunt ex officia?</span>
-                            <span className="text-green-300 font-semibold">Lorem dolor</span> sit amet <br />
-                            consectetur, elit.
+                            <span className="text-orange-300 font-semibold">Create. Combine. Mint.</span> <br />
+                            Join our <span className="text-red-400 font-semibold">Web3 art revolution.</span>{" "}
+                            <span className="text-blue-400 font-semibold"> Connect your wallet</span> to draw. <br />
+                            <span className="text-amber-500 font-semibold"> Earn by creating</span> - share in the
+                            profits. <br />
+                            <span className="text-green-300 font-semibold"> Be creative.</span>
                         </p>
 
                         <div className="mt-8 links">
                             <Link className="btn" href="/draw">
                                 Start Drawing
                             </Link>
-                            <Link className="btn" href="/earn">
-                                Earn Points
+                            <Link className="btn" href="/collection">
+                                Our Collection
                             </Link>
                         </div>
                     </div>
