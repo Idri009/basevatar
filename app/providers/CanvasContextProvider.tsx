@@ -24,7 +24,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         history: [],
         backgroundColor: "#ffffff",
         currentColor: "black",
-        day: "",
+        expiry: 0,
     });
 
     useEffect(() => {
@@ -34,7 +34,7 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
                 history: [],
                 backgroundColor: canvasProperties.availableColors[0],
                 currentColor: canvasProperties.availableColors[1],
-                day: "",
+                expiry: 0,
             };
 
             if (localStorage.getItem("basecanvas")) {
@@ -45,7 +45,8 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
                     decryptedData.hasOwnProperty("history") &&
                     decryptedData.hasOwnProperty("backgroundColor") &&
                     decryptedData.hasOwnProperty("currentColor") &&
-                    decryptedData.hasOwnProperty("day")
+                    decryptedData.hasOwnProperty("expiry") &&
+                    decryptedData.expiry > Date.now()
                 )
                     canvasData = decryptedData || canvasData;
             }
@@ -186,24 +187,19 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
-    const updateDay = (day: string) => {
-        setCanvasDatas((prev) => {
-            const canvasData = { ...prev, day: day };
-            updateLocalStorage(canvasData);
-            return { ...prev, day: day };
-        });
-    };
-
     const updateLocalStorage = async (data?: TCanvasDatas) => {
+        const date = new Date();
+        date.setHours(23, 59, 59, 999);
+        const expiryTime = date.getTime() + 1;
         if (!data) {
-            localStorage.setItem("basecanvas", await encryptCanvasData(canvasDatas));
+            localStorage.setItem("basecanvas", await encryptCanvasData({ ...canvasDatas, expiry: expiryTime }));
             return;
         }
-        localStorage.setItem("basecanvas", await encryptCanvasData(data));
+        localStorage.setItem("basecanvas", await encryptCanvasData({ ...data, expiry: expiryTime }));
     };
 
     const saveImageHandler = () => {
-        if(!canvas.current) return;
+        if (!canvas.current) return;
         const canvasBase64 = canvas.current.toDataURL("image/jpeg");
         uploadImageToServer(canvasBase64).then((res) => {
             console.log("Image uploaded to server", res);
@@ -223,9 +219,8 @@ const CanvasContextProvider = ({ children }: { children: ReactNode }) => {
         changeColor,
         zoomIn,
         zoomOut,
-        updateDay,
         updateLocalStorage,
-        saveImageHandler
+        saveImageHandler,
     };
 
     return <CanvasContext.Provider value={values}>{children}</CanvasContext.Provider>;

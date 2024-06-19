@@ -6,32 +6,11 @@ import { useEffect, useState } from "react";
 
 const Canvas = ({ theme, colors, day }: { theme: string; colors: string; day: string }) => {
     //
-    const {
-        canvas,
-        canvasDatas,
-        canvasProperties,
-        addPixel,
-        addHistory,
-        updateAvailableColors,
-        updateDay,
-        updateLocalStorage,
-        clearCanvas,
-        changeBackgroundColor,
-        changeColor
-    } = useCanvas();
+    const { canvas, canvasDatas, canvasProperties, addPixel, addHistory, updateAvailableColors, updateLocalStorage } =
+        useCanvas();
 
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
     const [lastDraw, setLastDraw] = useState<Record<string, string>>({});
-
-    // Clear canvas when changing day
-    // TODO: Fix this, it's not working as expected
-    useEffect(() => {
-        if (canvasDatas.day === "" || canvasDatas.day === day) return;
-        clearCanvas();
-        changeBackgroundColor(colors.split(",")[0]);
-        changeColor(colors.split(",")[1]);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [canvasDatas.day, colors]); 
 
     useEffect(() => {
         updateAvailableColors(colors.split(","));
@@ -39,10 +18,7 @@ const Canvas = ({ theme, colors, day }: { theme: string; colors: string; day: st
     }, []);
 
     useEffect(() => {
-        if (isDrawing) {
-            updateDay(day);
-            updateLocalStorage();
-        }
+        if (isDrawing) updateLocalStorage();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDrawing]);
 

@@ -7,7 +7,7 @@ export type TCanvasDatas = {
     history: Record<string, string>[];
     backgroundColor: string;
     currentColor: string;
-    day: string;
+    expiry: number;
 };
 export type TCanvasProperties = {
     width: number;
@@ -30,7 +30,6 @@ export interface ICanvasContext {
     changeColor: (color: string) => void;
     zoomIn: () => void;
     zoomOut: () => void;
-    updateDay: (day: string) => void;
     updateLocalStorage: () => void;
     saveImageHandler: () => void;
 }
@@ -49,7 +48,7 @@ const CanvasContext = createContext<ICanvasContext>({
         history: [],
         backgroundColor: "#ffffff",
         currentColor: "#000000",
-        day: "1",
+        expiry: 0,
     },
     addPixel: () => {},
     addHistory: () => {},
@@ -60,7 +59,6 @@ const CanvasContext = createContext<ICanvasContext>({
     changeColor: () => {},
     zoomIn: () => {},
     zoomOut: () => {},
-    updateDay: () => {},
     updateLocalStorage: () => {},
     saveImageHandler: () => {},
 });
