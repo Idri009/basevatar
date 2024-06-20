@@ -1,37 +1,12 @@
 "use client";
-
-import { useEffect, useRef, useState } from "react";
+import useCountDown from "@/app/hooks/useCountDown";
 
 const CountDown = ({ currDate, date }: { currDate: Date; date: string }) => {
     const endDate = new Date(date);
     const now = currDate;
-    const timeDifference = useRef(endDate.getTime() - now.getTime() < 0 ? 0 : endDate.getTime() - now.getTime());
 
+    const countdown = useCountDown({ currentTime: now.getTime(), endTime: endDate.getTime() });
 
-    const [countdown, setCountdown] = useState({
-        hours: Math.floor(timeDifference.current / (1000 * 60 * 60)),
-        minutes: Math.floor((timeDifference.current % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((timeDifference.current % (1000 * 60)) / 1000),
-    });
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            timeDifference.current = timeDifference.current - 1000;
-            if (timeDifference.current > 0) {
-                const hours = Math.floor(timeDifference.current / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDifference.current % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDifference.current % (1000 * 60)) / 1000);
-
-                setCountdown({ hours, minutes, seconds });
-            } else {
-                clearInterval(interval);
-            }
-        }, 1000);
-
-        return () => {
-            clearInterval(interval);
-        };
-    }, []);
     return (
         <div className="countdown-timer">
             <div className="countdown-item">
