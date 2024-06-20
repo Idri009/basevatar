@@ -7,10 +7,11 @@ import ServerErrorMessage from "@/app/components/common/ServerErrorMessage";
 import fetchSettings from "@/app/actions/common/fetch-settings";
 
 const Page = async () => {
+    const currDate = new Date().getTime();
     const session = await getSession();
     const { theme, colors, error: drawError } = await fetchDraw();
     const { settings, error: settingsError } = await fetchSettings();
-    const day = settings?.find((setting) => setting.key === "day")?.value;
+    const finish_time = settings.find((setting) => setting.key === "finish_time");
 
     return (
         <section className="section-draw py-8">
@@ -22,7 +23,12 @@ const Page = async () => {
                     {session?.address == null && <WarningMessage />}
                     {!drawError && session?.address && (
                         <CanvasContextProvider>
-                            <Canvas theme={theme!.value} colors={colors!.value} day={day ?? "1"} />
+                            <Canvas
+                                theme={theme!.value}
+                                colors={colors!.value}
+                                currentTime={currDate}
+                                finishTime={Number(finish_time?.value) || 0}
+                            />
                         </CanvasContextProvider>
                     )}
                 </div>

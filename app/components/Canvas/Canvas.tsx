@@ -3,8 +3,19 @@
 import useCanvas from "@/app/hooks/useCanvas";
 import Tools from "./Tools";
 import { useEffect, useState } from "react";
+import useCountDown from "@/app/hooks/useCountDown";
 
-const Canvas = ({ theme, colors, day }: { theme: string; colors: string; day: string }) => {
+const Canvas = ({
+    theme,
+    colors,
+    currentTime,
+    finishTime,
+}: {
+    theme: string;
+    colors: string;
+    currentTime: number;
+    finishTime: number;
+}) => {
     //
     const { canvas, canvasDatas, canvasProperties, addPixel, addHistory, updateAvailableColors, updateLocalStorage } =
         useCanvas();
@@ -69,12 +80,21 @@ const Canvas = ({ theme, colors, day }: { theme: string; colors: string; day: st
         });
     };
 
+    const countdown = useCountDown({ currentTime, endTime: finishTime });
+
     return (
         <>
             <div className="mt-2">
                 Today&apos;s theme: <span className="font-semibold">{theme}</span>
             </div>
             <Tools colors={colors.split(",")} />
+            <div className="flex gap-2 pb-4 text-center select-none">
+                <div className="font-bold">New Day Starts In</div>
+                <div className="flex gap-1 justify-center">
+                    {countdown.hours.toString().padStart(2, "0")}:{countdown.minutes.toString().padStart(2, "0")}:
+                    {countdown.seconds.toString().padStart(2, "0")}
+                </div>
+            </div>
             <canvas
                 ref={canvas}
                 width={canvasProperties.width}
