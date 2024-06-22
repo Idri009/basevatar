@@ -15,6 +15,8 @@ export async function uploadImageToServer(data: string) {
         const session = await getSession();
         if (!session || !day) return;
         const userAddress = session.address;
+        const userHasAlreadyUploaded = await checkIfUserHasAlreadyUploaded(+day.value, userAddress);
+        if (userHasAlreadyUploaded) return;
         //create day folder
         const dayFolder = path.join(process.cwd(), "public", "images", day.value);
         await fs.mkdir(dayFolder, { recursive: true });
@@ -42,6 +44,21 @@ const saveToDatabase = async (day: number, url: string, address: string, isSelec
                 isSelected,
             },
         });
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+export const checkIfUserHasAlreadyUploaded = async (day: number, address: string) => {
+    try {
+        if (!day || !address) return false;
+        const image = await prisma.images.findFirst({
+            where: {
+                day,
+                address,
+            },
+        });
+        return image;
     } catch (e) {
         console.error(e);
     }

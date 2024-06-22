@@ -5,6 +5,7 @@ import classes from "./Tools.module.scss";
 import { LucideImage, LucideMinus, LucidePlus, LucideSave, LucideTrash2, LucideUndo } from "lucide-react";
 import { useState } from "react";
 import ImageViewer from "./ImageViewer";
+import { useRouter } from "next/navigation";
 
 const Tools = ({ colors }: { colors: string[] }) => {
     const {
@@ -16,7 +17,7 @@ const Tools = ({ colors }: { colors: string[] }) => {
         zoomOut,
         clearCanvas,
         changeBackgroundColor,
-        saveImageHandler
+        saveImageHandler,
     } = useCanvas();
     const [activeColor, setActiveColor] = useState<string>(canvasDatas.currentColor);
     const [imageViewer, setImageViewer] = useState<boolean>(false);
@@ -27,6 +28,8 @@ const Tools = ({ colors }: { colors: string[] }) => {
 
         undoPixels(last);
     };
+
+    const router = useRouter();
 
     return (
         <div className={classes.tools}>
@@ -56,9 +59,16 @@ const Tools = ({ colors }: { colors: string[] }) => {
                 >
                     <LucideTrash2 size={24} />
                 </button>
-                <button onClick={() => {
-                    saveImageHandler();
-                }}>
+                <button
+                    onClick={() => {
+                        if (confirm("Are you sure you want to save the image? This action is irreversible.")) {
+                            saveImageHandler();
+                            router.refresh();
+                        } else {
+                            return;
+                        }
+                    }}
+                >
                     <LucideSave size={24} />
                 </button>
             </div>
