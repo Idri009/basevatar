@@ -3,6 +3,7 @@
 import { prisma } from "@/app/lib/db";
 import { isTransactionValid } from "@/app/utils/isTransactionValid";
 import { getSession, isSessionValid } from "@/app/utils/sessionHelpers";
+import { postNewSlackMessage } from "@/app/utils/slackHelpers";
 
 export async function sendVote({ id, hash }: { id: string; hash: string }) {
     //
@@ -39,6 +40,17 @@ export async function sendVote({ id, hash }: { id: string; hash: string }) {
             hash: hash,
         },
     });
+    const slackConservationId = "C0796QAEC1K";
+    await postNewSlackMessage(
+        slackConservationId,
+        `New vote from ${walletAddress} 
+vote id: *${id}*
+vote count: *${updatedData.count}*
+vote type: *${updatedData.type}*
+vote value: *${updatedData.value.join(",")}*
+https://sepolia.basescan.org/tx/${hash}
+        `
+    );
 
     return { updatedData };
 }
