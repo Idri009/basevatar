@@ -4,7 +4,7 @@ import path from "node:path";
 import { v4 as uuidv4 } from "uuid";
 import { prisma } from "@/app/lib/db";
 import { getSession } from "@/app/utils/sessionHelpers";
-import { postNewSavedImage } from "@/app/utils/slackHelpers";
+import { postNewSlackMessage } from "@/app/utils/slackHelpers";
 
 export async function uploadImageToServer(data: string) {
     try {
@@ -26,7 +26,13 @@ export async function uploadImageToServer(data: string) {
 
         await saveToDatabase(+day.value, url, userAddress);
         //slack message
-        await postNewSavedImage(process.env.NEXT_PUBLIC_BASE_URL + url, userAddress, day.value);
+        const slackConservationId = "C078QPSCK6W";
+        await postNewSlackMessage(
+            slackConservationId,
+            `New saved image from ${userAddress} on *day ${day.value}*:
+${process.env.NEXT_PUBLIC_BASE_URL + url}
+            `
+        );
 
         return url;
     } catch (e) {

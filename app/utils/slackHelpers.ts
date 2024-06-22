@@ -1,22 +1,17 @@
 import { WebClient } from "@slack/web-api";
 const token = process.env.SLACK_BOT_TOKEN;
-const cronjobConservationId = "C078QPSCK6W";
 
-const postNewSavedImage = async (imageUrl: string, userAddress: string, day: string) => {
+export const postNewSlackMessage = async (conservationId: string, text: string) => {
     const web = new WebClient(token);
 
     try {
         const result = await web.chat.postMessage({
-            text: `New saved image from ${userAddress} on *day ${day}*:
-${imageUrl}
-            `,
-            channel: cronjobConservationId,
+            text,
+            channel: conservationId,
         });
 
-        console.log(`Successfully send message ${result.ts} in conversation ${cronjobConservationId}`);
+        console.log(`Successfully send message ${result.ts} in conversation ${conservationId}`);
     } catch (e) {
         console.error(e);
     }
 };
-
-export { postNewSavedImage };
