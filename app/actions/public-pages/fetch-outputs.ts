@@ -1,9 +1,9 @@
 "use server";
 import { prisma } from "@/app/lib/db";
 
-const fetchGallery = async () => {
+const fetchOutputs = async () => {
     try {
-        const items = await prisma.gallery.findMany({
+        const items = await prisma.outputs.findMany({
             orderBy: {
                 created_at: "desc",
             },
@@ -24,4 +24,4 @@ const fetchGallery = async () => {
     }
 };
 
-export default fetchGallery;
+export default fetchOutputs;

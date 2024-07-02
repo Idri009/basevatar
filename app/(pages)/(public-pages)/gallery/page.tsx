@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { LucideDownload, LucideSailboat } from "lucide-react";
-import fetchGallery from "@/app/actions/public-pages/fetch-gallery";
+import fetchOutputs from "@/app/actions/public-pages/fetch-outputs";
 import ServerErrorMessage from "@/app/components/common/ServerErrorMessage";
 
 const Page = async () => {
     const currDate = new Date();
-    const { items, error } = await fetchGallery();
+    const { items, error } = await fetchOutputs();
 
     return (
         <section className="section-gallery">
@@ -30,7 +30,7 @@ const Page = async () => {
                                         />
                                     </div>
                                     <div className="title">
-                                        <h6>{item.title}</h6>
+                                        <h6>{item.day + item.theme}</h6>
                                         <div className="color-palette">
                                             {item.colors.map((color, index) => (
                                                 <div
@@ -42,13 +42,14 @@ const Page = async () => {
                                         </div>
                                     </div>
                                     <div className="button">
-                                        {new Date(item.end_date) < currDate ? (
+                                        {/*new Date(item.end_date) < currDate ? (
                                             <Link href={item.opensea_url}>BUY</Link>
                                         ) : (
                                             <Link href="" className="mint-btn">
                                                 MINT
                                             </Link>
-                                        )}
+                                        )
+                                            */}
                                     </div>
                                     <div className="links">
                                         <Link href={item.image_url} target="_blank">
