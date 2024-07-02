@@ -1,7 +1,7 @@
 "use client";
 import useCountDown from "@/app/hooks/useCountDown";
 
-const CountDown = ({ currDate, date }: { currDate: Date; date: string }) => {
+const CountDown = ({ currDate, date }: { currDate: Date; date: Date }) => {
     const endDate = new Date(date);
     const now = currDate;
 

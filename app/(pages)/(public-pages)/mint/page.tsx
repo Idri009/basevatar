@@ -8,7 +8,7 @@ const Page = async () => {
 
     const { item, error } = await fetchMint();
 
-    if (error) {
+    if (error || !item) {
         return (
             <section className="section-mint">
                 <div className="container">
@@ -24,7 +24,7 @@ const Page = async () => {
                 <div className="row flex-wrap-reverse gap-y-8 md:gap-y-0">
                     <div className="md:col-4">
                         <Image
-                            src={item?.image_url || ""}
+                            src={item.image_url || ""}
                             width={1000}
                             height={1000}
                             alt="intro-img-1"
@@ -32,7 +32,9 @@ const Page = async () => {
                         />
                     </div>
                     <div className="md:col-8 mint">
-                        <h3 className="mint-title">{item?.day}</h3>
+                        <h3 className="mint-title">
+                            #Day {item.day} - {item.theme}
+                        </h3>
                         <div className="color-palette">
                             <div className="color" style={{ backgroundColor: "#FFD700" }}></div>
                             <div className="color" style={{ backgroundColor: "#FFA500" }}></div>
@@ -40,21 +42,26 @@ const Page = async () => {
                             <div className="color" style={{ backgroundColor: "#FF4500" }}></div>
                             <div className="color" style={{ backgroundColor: "#FF0000" }}></div>
                         </div>
-                        {
-                            // <CountDown currDate={currDate} date={item?.end_date || ""} />
-                        }
+
+                        <CountDown currDate={currDate} date={item.end_time} />
+
                         <div className="contributors">
                             <div className="title">Contributors</div>
                             <p>
-                                cryptomoogle.eth, deanharvey.eth, 0x4241…38a0, judebuffum.eth, olotus.eth,
-                                bombadilus.eth, numo.eth, notoriousman.eth, trombopoline.eth, 0xbheem.eth, ...{" "}
-                                <span className="text-amber-500">489 total artists</span>
+                                {item?.contributors?.map((contributors, id) => (
+                                    <span key={id} className="text-amber-500">
+                                        {contributors}
+                                    </span>
+                                ))}{" "}
                             </p>
                         </div>
 
                         <div className="mint-button mt-4">
                             <button>MINT</button>
-                            <span>0.0026 ETH • 468 MINTED</span>
+                            <span>
+                                {Number(process.env.NEXT_PUBLIC_VOTE_PRICE) * item.mint_count} ETH • {item.mint_count}{" "}
+                                MINTED
+                            </span>
                         </div>
                     </div>
                 </div>

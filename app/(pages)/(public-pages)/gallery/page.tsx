@@ -30,7 +30,9 @@ const Page = async () => {
                                         />
                                     </div>
                                     <div className="title">
-                                        <h6>{item.day + item.theme}</h6>
+                                        <h6>
+                                            #Day{item.day} - {item.theme}
+                                        </h6>
                                         <div className="color-palette">
                                             {item.colors.map((color, index) => (
                                                 <div
@@ -42,14 +44,13 @@ const Page = async () => {
                                         </div>
                                     </div>
                                     <div className="button">
-                                        {/*new Date(item.end_date) < currDate ? (
+                                        {new Date(item.end_time) < currDate ? (
                                             <Link href={item.opensea_url}>BUY</Link>
                                         ) : (
                                             <Link href="" className="mint-btn">
                                                 MINT
                                             </Link>
-                                        )
-                                            */}
+                                        )}
                                     </div>
                                     <div className="links">
                                         <Link href={item.image_url} target="_blank">
