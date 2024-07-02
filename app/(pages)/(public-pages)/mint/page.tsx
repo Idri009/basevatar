@@ -32,7 +32,7 @@ const Page = async () => {
                         />
                     </div>
                     <div className="md:col-8 mint">
-                        <h3 className="mint-title">{item?.title}</h3>
+                        <h3 className="mint-title">{item?.day}</h3>
                         <div className="color-palette">
                             <div className="color" style={{ backgroundColor: "#FFD700" }}></div>
                             <div className="color" style={{ backgroundColor: "#FFA500" }}></div>
@@ -40,7 +40,9 @@ const Page = async () => {
                             <div className="color" style={{ backgroundColor: "#FF4500" }}></div>
                             <div className="color" style={{ backgroundColor: "#FF0000" }}></div>
                         </div>
-                        <CountDown currDate={currDate} date={item?.end_date || ""} />
+                        {
+                            // <CountDown currDate={currDate} date={item?.end_date || ""} />
+                        }
                         <div className="contributors">
                             <div className="title">Contributors</div>
                             <p>
