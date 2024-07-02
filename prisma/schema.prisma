@@ -21,7 +21,7 @@ model outputs {
   colors       String[]
   theme        String
   contributors String[]
-  mint_count   Int
+  mint_count   Int      @default(0)
   end_time     DateTime @db.Timestamp
   created_at   DateTime @default(now()) @db.Date
   isDeleted    Boolean  @default(false)
