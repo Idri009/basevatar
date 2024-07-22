@@ -3,7 +3,7 @@ import { prisma } from "@/app/lib/db";
 
 const fetchOutputs = async () => {
     try {
-        const items = await prisma.outputs.findMany({
+        const items = await prisma.output.findMany({
             orderBy: {
                 created_at: "desc",
             },

@@ -10,7 +10,7 @@ export async function sendVote({ id, hash }: { id: string; hash: string }) {
     const session = await getSession();
     if (!(await isSessionValid())) return;
 
-    const hashCount = await prisma.voteLogs.count({
+    const hashCount = await prisma.voteLog.count({
         where: {
             hash,
         },
@@ -22,7 +22,7 @@ export async function sendVote({ id, hash }: { id: string; hash: string }) {
     const transaction = await isTransactionValid(hash);
     if (!transaction) throw new Error("Transaction not found.");
 
-    const updatedData = await prisma.votes.update({
+    const updatedData = await prisma.vote.update({
         where: {
             id,
         },
@@ -33,7 +33,7 @@ export async function sendVote({ id, hash }: { id: string; hash: string }) {
         },
     });
 
-    await prisma.voteLogs.create({
+    await prisma.voteLog.create({
         data: {
             vote_id: id,
             wallet: walletAddress as string,

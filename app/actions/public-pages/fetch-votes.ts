@@ -3,13 +3,13 @@ import { prisma } from "@/app/lib/db";
 
 const fetchVotes = async () => {
     try {
-        const settings = await prisma.settings.findFirst({
+        const settings = await prisma.setting.findFirst({
             where: {
                 key: "day",
             },
         });
 
-        const colors = await prisma.votes.findMany({
+        const colors = await prisma.vote.findMany({
             where: {
                 type: "color",
                 day: Number(settings?.value) + 1 ?? 1,
@@ -17,7 +17,7 @@ const fetchVotes = async () => {
             },
         });
 
-        const themes = await prisma.votes.findMany({
+        const themes = await prisma.vote.findMany({
             where: {
                 type: "theme",
                 day: Number(settings?.value) + 1 ?? 1,

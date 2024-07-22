@@ -7,13 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model settings {
+model Setting {
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   key   String
   value String
 }
 
-model outputs {
+model Output {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   image_url    String
   opensea_url  String
@@ -27,22 +27,22 @@ model outputs {
   isDeleted    Boolean  @default(false)
 }
 
-enum voteTypes {
+enum VoteType {
   color
   theme
 }
 
-model votes {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  count     Int       @default(0)
-  date      DateTime  @db.Date
-  type      voteTypes
+model Vote {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  count     Int      @default(0)
+  date      DateTime @db.Date
+  type      VoteType
   value     String[]
   day       Int
-  isDeleted Boolean   @default(false)
+  isDeleted Boolean  @default(false)
 }
 
-model voteLogs {
+model VoteLog {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   wallet     String
   vote_id    String
@@ -50,7 +50,7 @@ model voteLogs {
   created_at DateTime @default(now()) @db.Date
 }
 
-model images {
+model Image {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   day        Int
   address    String

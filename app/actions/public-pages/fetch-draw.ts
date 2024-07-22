@@ -3,13 +3,13 @@ import { prisma } from "@/app/lib/db";
 
 const fetchDraw = async () => {
     try {
-        const theme = await prisma.settings.findFirst({
+        const theme = await prisma.setting.findFirst({
             where: {
                 key: "theme",
             },
         });
 
-        const colors = await prisma.settings.findFirst({
+        const colors = await prisma.setting.findFirst({
             where: {
                 key: "color",
             },

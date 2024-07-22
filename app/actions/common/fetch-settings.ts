@@ -3,7 +3,7 @@ import { prisma } from "@/app/lib/db";
 
 const fetchSettings = async () => {
     try {
-        const settings = await prisma.settings.findMany();
+        const settings = await prisma.setting.findMany();
 
         return {
             settings,

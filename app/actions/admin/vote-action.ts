@@ -35,7 +35,7 @@ export default async function voteAction(prevState: TFormState, formData: FormDa
     }
 
     try {
-        await prisma.votes.create({
+        await prisma.vote.create({
             data: {
                 day: formValues.day,
                 value: formValues.value,

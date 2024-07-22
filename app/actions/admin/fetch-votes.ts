@@ -4,7 +4,7 @@ import { prisma } from "@/app/lib/db";
 const fetchVotes = async ({ param }: { param: string }) => {
     "use server";
     try {
-        const settings = await prisma.settings.findFirst({
+        const settings = await prisma.setting.findFirst({
             where: {
                 key: "day",
             },
@@ -12,7 +12,7 @@ const fetchVotes = async ({ param }: { param: string }) => {
 
         let day = param ? (parseInt(param) > 0 ? param : "1") : (settings?.value as string);
 
-        const votes = await prisma.votes.findMany({
+        const votes = await prisma.vote.findMany({
             where: {
                 day: parseInt(day),
                 isDeleted: false,

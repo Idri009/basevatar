@@ -9,7 +9,7 @@ export async function voteDelete(id: string, day: string) {
     if (!(await isAdmin())) return;
 
     try {
-        await prisma.votes.update({
+        await prisma.vote.update({
             where: {
                 id: id,
             },

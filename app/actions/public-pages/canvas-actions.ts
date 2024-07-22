@@ -10,7 +10,7 @@ export async function uploadImageToServer(data: string) {
     try {
         const base64Image = data.split(";base64,").pop();
         if (!base64Image) return;
-        const settings = await prisma.settings.findMany();
+        const settings = await prisma.setting.findMany();
         const day = settings.find((setting) => setting.key === "day");
         const session = await getSession();
         if (!session || !day) return;
@@ -42,7 +42,7 @@ ${process.env.NEXT_PUBLIC_BASE_URL + url}
 
 const saveToDatabase = async (day: number, url: string, address: string, isSelected: boolean = true) => {
     try {
-        await prisma.images.create({
+        await prisma.image.create({
             data: {
                 day,
                 url,
@@ -58,7 +58,7 @@ const saveToDatabase = async (day: number, url: string, address: string, isSelec
 export const checkIfUserHasAlreadyUploaded = async (day: number, address: string) => {
     try {
         if (!day || !address) return false;
-        const image = await prisma.images.findFirst({
+        const image = await prisma.image.findFirst({
             where: {
                 day,
                 address,
