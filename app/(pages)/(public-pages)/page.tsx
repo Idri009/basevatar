@@ -24,7 +24,7 @@ export default function Home() {
                             <Link className="btn" href="/draw">
                                 Start Drawing
                             </Link>
-                            <Link className="btn" href="/collection">
+                            <Link className="btn" href="/gallery">
                                 Our Collection
                             </Link>
                         </div>
