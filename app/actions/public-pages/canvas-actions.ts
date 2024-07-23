@@ -5,31 +5,31 @@ import { v4 as uuidv4 } from "uuid";
 import { prisma } from "@/app/lib/db";
 import { getSession } from "@/app/utils/sessionHelpers";
 import { postNewSlackMessage } from "@/app/utils/slackHelpers";
+import fetchSettings from "../common/fetch-settings";
 
 export async function uploadImageToServer(data: string) {
     try {
         const base64Image = data.split(";base64,").pop();
         if (!base64Image) return;
-        const settings = await prisma.setting.findMany();
-        const day = settings.find((setting) => setting.key === "day");
+        const { setting: day } = await fetchSettings("day");
         const session = await getSession();
         if (!session || !day) return;
         const userAddress = session.address;
-        const userHasAlreadyUploaded = await checkIfUserHasAlreadyUploaded(+day.value, userAddress);
+        const userHasAlreadyUploaded = await checkIfUserHasAlreadyUploaded(+day, userAddress);
         if (userHasAlreadyUploaded) return;
         //create day folder
-        const dayFolder = path.join(process.cwd(), "public", "images", day.value);
+        const dayFolder = path.join(process.cwd(), "public", "images", day);
         await fs.mkdir(dayFolder, { recursive: true });
-        const imagePath = path.join(process.cwd(), "public", "images", day.value, `${uuidv4()}.jpg`);
+        const imagePath = path.join(process.cwd(), "public", "images", day, `${uuidv4()}.jpg`);
         await fs.writeFile(imagePath, base64Image, "base64");
-        const url = `/images/${day.value}/${path.basename(imagePath)}`;
+        const url = `/images/${day}/${path.basename(imagePath)}`;
 
-        await saveToDatabase(+day.value, url, userAddress);
+        await saveToDatabase(+day, url, userAddress);
         //slack message
         const slackConservationId = "C078QPSCK6W";
         await postNewSlackMessage(
             slackConservationId,
-            `New saved image from ${userAddress} on *day ${day.value}*:
+            `New saved image from ${userAddress} on *day ${day}*:
 ${process.env.NEXT_PUBLIC_BASE_URL + url}
             `
         );

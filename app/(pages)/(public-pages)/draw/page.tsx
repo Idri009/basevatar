@@ -7,15 +7,17 @@ import ServerErrorMessage from "@/app/components/common/ServerErrorMessage";
 import fetchSettings from "@/app/actions/common/fetch-settings";
 import { checkIfUserHasAlreadyUploaded } from "@/app/actions/public-pages/canvas-actions";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
     const currDate = new Date().getTime();
     const session = await getSession();
     const { theme, colors, error: drawError } = await fetchDraw();
-    const { settings, error: settingsError } = await fetchSettings();
-    const finish_time = settings.find((setting) => setting.key === "finish_time");
-    const day = settings.find((setting) => setting.key === "day");
-    const userHasAlreadyUploaded = await checkIfUserHasAlreadyUploaded(+day?.value!, session?.address!);
+    const { setting: finishTime } = await fetchSettings("finish_time");
+    const { setting: day } = await fetchSettings("day");
+
+    if (!day || !finishTime || !theme || !colors) redirect("/");
+    const userHasAlreadyUploaded = await checkIfUserHasAlreadyUploaded(+day, session?.address!);
 
     return (
         <section className="section-draw py-8">
@@ -23,7 +25,7 @@ const Page = async () => {
                 <div className="heading">
                     <h1 className="title">Draw</h1>
                     <p className="subtitle">Draw your own design</p>
-                    {(settingsError || drawError) && <ServerErrorMessage />}
+                    {(!finishTime || !day || drawError) && <ServerErrorMessage />}
                     {session && session.address == null && <WarningMessage />}
                     {userHasAlreadyUploaded && (
                         <div className="py-4 text-red-300 font-bold">
@@ -35,10 +37,10 @@ const Page = async () => {
                     {!drawError && session && session.address && !userHasAlreadyUploaded && (
                         <CanvasContextProvider>
                             <Canvas
-                                theme={theme!.value}
-                                colors={colors!.value}
+                                theme={theme}
+                                colors={colors}
                                 currentTime={currDate}
-                                finishTime={Number(finish_time?.value) || 0}
+                                finishTime={Number(finishTime) || 0}
                             />
                         </CanvasContextProvider>
                     )}

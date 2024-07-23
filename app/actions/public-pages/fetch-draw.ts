@@ -1,19 +1,11 @@
 "use server";
 import { prisma } from "@/app/lib/db";
+import fetchSettings from "../common/fetch-settings";
 
 const fetchDraw = async () => {
     try {
-        const theme = await prisma.setting.findFirst({
-            where: {
-                key: "theme",
-            },
-        });
-
-        const colors = await prisma.setting.findFirst({
-            where: {
-                key: "color",
-            },
-        });
+        const { setting: theme } = await fetchSettings("theme");
+        const { setting: colors } = await fetchSettings("color");
 
         return {
             theme,

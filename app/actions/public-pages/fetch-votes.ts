@@ -1,18 +1,15 @@
 "use server";
 import { prisma } from "@/app/lib/db";
+import fetchSettings from "../common/fetch-settings";
 
 const fetchVotes = async () => {
     try {
-        const settings = await prisma.setting.findFirst({
-            where: {
-                key: "day",
-            },
-        });
+        const { setting: day } = await fetchSettings("day");
 
         const colors = await prisma.vote.findMany({
             where: {
                 type: "color",
-                day: Number(settings?.value) + 1 ?? 1,
+                day: Number(day) + 1 ?? 1,
                 isDeleted: false,
             },
         });
@@ -20,7 +17,7 @@ const fetchVotes = async () => {
         const themes = await prisma.vote.findMany({
             where: {
                 type: "theme",
-                day: Number(settings?.value) + 1 ?? 1,
+                day: Number(day) + 1 ?? 1,
                 isDeleted: false,
             },
         });
@@ -28,14 +25,14 @@ const fetchVotes = async () => {
         return {
             colors,
             themes,
-            settings,
+            day,
             error: false,
         };
     } catch (e: unknown) {
         return {
             colors: [],
             themes: [],
-            settings: null,
+            day: "1",
             error: true,
         };
     }

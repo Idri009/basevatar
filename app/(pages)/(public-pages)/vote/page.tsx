@@ -6,7 +6,7 @@ import ServerErrorMessage from "@/app/components/common/ServerErrorMessage";
 const Page = async () => {
     const session = await getSession();
 
-    const { colors, themes, settings, error } = await fetchVotes();
+    const { colors, themes, day, error } = await fetchVotes();
 
     if (error) {
         return (
@@ -22,7 +22,7 @@ const Page = async () => {
         <section className="section-vote">
             <div className="container">
                 <div className="heading">
-                    <h1 className="title">Vote for Day #{Number(settings?.value) + 1 || 1} Themes</h1>
+                    <h1 className="title">Vote for Day #{Number(day) + 1 || 1} Themes</h1>
                     <p className="subtitle">
                         Vote for the colors and themes you want to see in the next day&apos;s theme.
                     </p>

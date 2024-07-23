@@ -9,7 +9,7 @@ const Page = async ({
         day: string;
     };
 }) => {
-    const { votes, day, settings, error } = await fetchVotes({ param: searchParams.day });
+    const { votes, day, error } = await fetchVotes({ param: searchParams.day });
 
     return (
         <section className="section-vote-admin">
@@ -21,8 +21,8 @@ const Page = async ({
                 </p>
             </div>
             <div className="flex gap-2 mt-2">
-                {searchParams.day !== settings?.value && (
-                    <Link href={`/admin/votes?day=${settings?.value}`} className="btn px-3 py-1">
+                {searchParams.day !== day && (
+                    <Link href={`/admin/votes?day=${day}`} className="btn px-3 py-1">
                         Today
                     </Link>
                 )}
