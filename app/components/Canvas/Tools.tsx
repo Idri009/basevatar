@@ -6,6 +6,7 @@ import { LucideImage, LucideMinus, LucidePlus, LucideSave, LucideTrash2, LucideU
 import { useState } from "react";
 import ImageViewer from "./ImageViewer";
 import { useRouter } from "next/navigation";
+import ConfirmationModal from "../common/Modal/ConfirmationModal";
 
 const Tools = ({ colors }: { colors: string[] }) => {
     const {
@@ -22,6 +23,9 @@ const Tools = ({ colors }: { colors: string[] }) => {
     const [activeColor, setActiveColor] = useState<string>(canvasDatas.currentColor);
     const [imageViewer, setImageViewer] = useState<boolean>(false);
 
+    const [isSaveModalOpen, setIsSaveModalOpen] = useState<boolean>(false);
+    const [isClearModalOpen, setIsClearModalOpen] = useState<boolean>(false);
+
     const undoHandler = () => {
         const last = canvasDatas.history[canvasDatas.history.length - 1];
         if (!last) return;
@@ -33,6 +37,32 @@ const Tools = ({ colors }: { colors: string[] }) => {
 
     return (
         <div className={classes.tools}>
+            {isClearModalOpen && (
+                <ConfirmationModal
+                    handleConfirm={() => {
+                        clearCanvas();
+                        setIsClearModalOpen(false);
+                    }}
+                    handleCancel={() => setIsClearModalOpen(false)}
+                    icon={<LucideTrash2 size={90} />}
+                >
+                    Are you sure you want to clear the canvas?
+                </ConfirmationModal>
+            )}
+            {isSaveModalOpen && (
+                <ConfirmationModal
+                    handleConfirm={() => {
+                        saveImageHandler();
+                        router.refresh();
+                        setIsSaveModalOpen(false);
+                    }}
+                    handleCancel={() => setIsSaveModalOpen(false)}
+                    icon={<LucideSave size={90} />}
+                >
+                    Are you sure you want to save the image? <br /> This action is irreversible.
+                </ConfirmationModal>
+            )}
+
             <div className="mt-2 text-sm font-bold">x{canvasProperties.zoom.toFixed(2)} zoom</div>
             <ImageViewer visible={imageViewer} />
             <div className={classes.settings}>
@@ -54,19 +84,14 @@ const Tools = ({ colors }: { colors: string[] }) => {
                 </button>
                 <button
                     onClick={() => {
-                        confirm("Are you sure you want to clear the canvas?") && clearCanvas();
+                        setIsClearModalOpen(true);
                     }}
                 >
                     <LucideTrash2 size={24} />
                 </button>
                 <button
                     onClick={() => {
-                        if (confirm("Are you sure you want to save the image? This action is irreversible.")) {
-                            saveImageHandler();
-                            router.refresh();
-                        } else {
-                            return;
-                        }
+                        setIsSaveModalOpen(true);
                     }}
                 >
                     <LucideSave size={24} />
