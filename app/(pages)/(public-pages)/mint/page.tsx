@@ -25,7 +25,7 @@ const Page = async () => {
                 <div className="row flex-wrap-reverse gap-y-8 md:gap-y-0">
                     <div className="md:col-4">
                         <Image
-                            src={item.image_url || ""}
+                            src={`/outputs/output-day-${item.day}.jpg`}
                             width={1000}
                             height={1000}
                             alt="intro-img-1"

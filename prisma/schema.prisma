@@ -15,7 +15,6 @@ model Setting {
 
 model Output {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  image_url    String
   opensea_url  String
   day          Int
   colors       String[]

@@ -24,8 +24,8 @@ const Page = async () => {
                                 <div className="item" key={item.id}>
                                     <div className="image">
                                         <Image
-                                            src={item.image_url}
-                                            alt=""
+                                            src={`/outputs/output-day-${item.day}.jpg`}
+                                            alt={`Day ${item.day} Output`}
                                             layout="responsive"
                                             width={900}
                                             height={600}
@@ -55,7 +55,7 @@ const Page = async () => {
                                         )}
                                     </div>
                                     <div className="links">
-                                        <Link href={item.image_url} target="_blank">
+                                        <Link href={`/outputs/output-day-${item.day}.jpg`} target="_blank">
                                             <LucideDownload size={16} />
                                             Download
                                         </Link>
