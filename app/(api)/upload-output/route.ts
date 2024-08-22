@@ -26,6 +26,11 @@ export const POST = async (req: NextRequest) => {
         }
 
         const buffer = Buffer.from(await file.arrayBuffer());
+
+        //create output folder if it doesn't exist
+        const outputFolder = path.join(process.cwd(), "public", "outputs");
+        await fs.mkdir(outputFolder, { recursive: true });
+
         const fileName = `output-day-${day}.jpg`;
         const filePath = path.join(process.cwd(), "public", "outputs", fileName);
 
