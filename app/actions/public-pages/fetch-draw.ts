@@ -1,5 +1,4 @@
 "use server";
-import { prisma } from "@/app/lib/db";
 import fetchSettings from "../common/fetch-settings";
 
 const fetchDraw = async () => {
