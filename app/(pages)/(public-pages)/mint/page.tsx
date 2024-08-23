@@ -13,7 +13,7 @@ const Page = async () => {
         return (
             <section className="section-mint">
                 <div className="container">
-                    <ServerErrorMessage />
+                    <ServerErrorMessage message="First mint is coming soon. Stay tuned!" />
                 </div>
             </section>
         );
