@@ -1,11 +1,10 @@
 "use server";
-import fs from "node:fs/promises";
-import path from "node:path";
 import { v4 as uuidv4 } from "uuid";
 import { prisma } from "@/app/lib/db";
 import { getSession } from "@/app/utils/sessionHelpers";
 import { postNewSlackMessage } from "@/app/utils/slackHelpers";
 import fetchSettings from "../common/fetch-settings";
+import uploadFileToS3 from "@/app/utils/uploadFileToS3";
 
 export async function uploadImageToServer(data: string) {
     try {
@@ -17,24 +16,21 @@ export async function uploadImageToServer(data: string) {
         const userAddress = session.address;
         const userHasAlreadyUploaded = await checkIfUserHasAlreadyUploaded(+day, userAddress);
         if (userHasAlreadyUploaded) return;
-        //create day folder
-        const dayFolder = path.join(process.cwd(), "public", "images", day);
-        await fs.mkdir(dayFolder, { recursive: true });
-        const imagePath = path.join(process.cwd(), "public", "images", day, `${uuidv4()}.jpg`);
-        await fs.writeFile(imagePath, base64Image, "base64");
-        const url = `/images/${day}/${path.basename(imagePath)}`;
 
-        await saveToDatabase(+day, url, userAddress);
+        const buffer = Buffer.from(base64Image, "base64");
+        const s3Url = await uploadFileToS3(buffer, `images/${day}/${uuidv4()}.jpg`);
+
+        await saveToDatabase(+day, s3Url, userAddress);
         //slack message
         const slackConservationId = "C078QPSCK6W";
         await postNewSlackMessage(
             slackConservationId,
             `New saved image from ${userAddress} on *day ${day}*:
-${process.env.NEXT_PUBLIC_BASE_URL + url}
+https://${process.env.AWS_S3_URL}/${s3Url}
             `
         );
 
-        return url;
+        return s3Url;
     } catch (e) {
         console.error(e);
     }

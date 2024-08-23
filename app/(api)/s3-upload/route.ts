@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
-
-export const GET = async (req: NextRequest) => {
-    return NextResponse.json({ message: "Hello world!" });
-};
+import uploadFileToS3 from "@/app/utils/uploadFileToS3";
 
 export const POST = async (req: NextRequest) => {
     try {
@@ -21,30 +16,18 @@ export const POST = async (req: NextRequest) => {
             return NextResponse.json({ message: "No file uploaded" }, { status: 400 });
         }
 
-        if (!day || isNaN(Number(day))) {
-            return NextResponse.json({ message: "Invalid or missing day parameter" }, { status: 400 });
-        }
-
         const buffer = Buffer.from(await file.arrayBuffer());
 
-        //create output folder if it doesn't exist
-        const outputFolder = path.join(process.cwd(), "public", "outputs");
-        await fs.mkdir(outputFolder, { recursive: true });
-
-        const fileName = `output-day-${day}.jpg`;
-        const filePath = path.join(process.cwd(), "public", "outputs", fileName);
-
         try {
-            await fs.writeFile(filePath, buffer);
+            const fileName = await uploadFileToS3(buffer, "outputs/output-day-" + day + ".jpg");
+
+            return NextResponse.json({
+                message: "File uploaded successfully",
+                fileName,
+            });
         } catch (error) {
             return NextResponse.json({ message: "File upload failed" }, { status: 500 });
         }
-
-        return NextResponse.json({
-            message: "File uploaded successfully",
-            fileName,
-            filePath,
-        });
     } catch (error) {
         return NextResponse.json({ message: "An error occurred" }, { status: 500 });
     }
