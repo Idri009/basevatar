@@ -17,7 +17,7 @@ const Page = async () => {
     const { setting: finishTime } = await fetchSettings("finish_time");
     const { setting: day } = await fetchSettings("day");
 
-    const pastDraws = await fetchPastDraws({ session: session?.address! });
+    const { pastDraws } = await fetchPastDraws({ session: session?.address! });
 
     if (!day || !finishTime || !theme || !colors) redirect("/");
     const userHasAlreadyUploaded = await checkIfUserHasAlreadyUploaded(+day, session?.address!);
@@ -52,11 +52,11 @@ const Page = async () => {
                         )}
                     </div>
                     <div className="past-draws lg:col-6">
-                        {session && session.address && (
+                        {session && session.address && pastDraws && (
                             <>
                                 <h3 className="title">Your past draws</h3>
                                 <div className="cards">
-                                    {pastDraws.pastDraws?.map((draw) => (
+                                    {pastDraws.map((draw) => (
                                         <div key={draw.id} className="card">
                                             <div>DAY {draw.day}</div>
                                             <Image src={draw.url} width={150} height={150} alt={`day-${draw.day}`} />

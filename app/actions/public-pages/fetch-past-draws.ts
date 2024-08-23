@@ -12,6 +12,12 @@ const fetchPastDraws = async ({ session }: { session: string }) => {
             },
         });
 
+        if (!pastDraws.length)
+            return {
+                pastDraws: null,
+                error: false,
+            };
+
         return {
             pastDraws,
             error: false,
