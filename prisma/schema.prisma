@@ -34,7 +34,7 @@ enum VoteType {
 model Vote {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   count     Int      @default(0)
-  date      DateTime @db.Date
+  date      DateTime @default(now()) @db.Date
   type      VoteType
   value     String[]
   day       Int
