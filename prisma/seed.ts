@@ -47,6 +47,18 @@ const initialVotes = [
     },
 ];
 
+const initalOutput = [
+    {
+        opensea_url: "https://opensea.io/collection/beer",
+        day: 0,
+        colors: ["#ff0000", "#00ff00", "#0000ff", "#f98212", "#fedfc3"],
+        theme: "Example Item",
+        contributors: ["0x1234567890"],
+        mint_count: 251,
+        end_time: new Date(date.getTime() + 1),
+    },
+];
+
 const seed = async () => {
     await prisma.image.deleteMany();
     await prisma.output.deleteMany();
@@ -60,6 +72,10 @@ const seed = async () => {
 
     await prisma.vote.createMany({
         data: initialVotes,
+    });
+
+    await prisma.output.createMany({
+        data: initalOutput,
     });
 };
 
