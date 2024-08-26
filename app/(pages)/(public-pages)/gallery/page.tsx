@@ -26,7 +26,7 @@ const Page = async () => {
                                         <Image
                                             src={`/outputs/output-day-${item.day}.jpg`}
                                             alt={`Day ${item.day} Output`}
-                                            layout="responsive"
+                                            priority
                                             width={900}
                                             height={600}
                                         />

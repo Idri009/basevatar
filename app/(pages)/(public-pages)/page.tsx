@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import srcIntroImg1 from "@/app/assets/img/pixel-art.webp";
+import srcPixelArtWebp from "@/app/assets/img/pixel-art.webp";
 
 export default function Home() {
     return (
@@ -28,7 +28,7 @@ export default function Home() {
                     </div>
                     <div className="lg:col-6">
                         <div className="image">
-                            <Image src={srcIntroImg1} alt="" />
+                            <Image priority src={srcPixelArtWebp} alt="Basevatar Intro" />
                         </div>
                     </div>
                 </div>

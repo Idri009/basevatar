@@ -28,6 +28,7 @@ const Page = async () => {
                             src={`/outputs/output-day-${item.day}.jpg`}
                             width={1000}
                             height={1000}
+                            priority
                             alt="intro-img-1"
                             className="rounded"
                         />
