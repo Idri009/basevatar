@@ -1,9 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import srcIntroImg1 from "@/app/assets/img/intro-img-1.png";
-import srcIntroImg2 from "@/app/assets/img/intro-img-2.png";
-import srcIntroImg3 from "@/app/assets/img/intro-img-3.png";
-import srcIntroImg4 from "@/app/assets/img/intro-img-4.png";
+import srcIntroImg1 from "@/app/assets/img/pixel-art.webp";
 
 export default function Home() {
     return (
@@ -30,11 +27,8 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="lg:col-6">
-                        <div className="images">
+                        <div className="image">
                             <Image src={srcIntroImg1} alt="" />
-                            <Image src={srcIntroImg2} alt="" />
-                            <Image src={srcIntroImg3} alt="" />
-                            <Image src={srcIntroImg4} alt="" />
                         </div>
                     </div>
                 </div>
