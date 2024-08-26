@@ -24,7 +24,7 @@ const Page = async () => {
                                 <div className="item" key={item.id}>
                                     <div className="image">
                                         <Image
-                                            src={`https://${process.env.AWS_S3_URL}/outputs/output-day-${item.day}.jpg`}
+                                            src={`/outputs/output-day-${item.day}.jpg`}
                                             alt={`Day ${item.day} Output`}
                                             layout="responsive"
                                             width={900}
@@ -55,10 +55,7 @@ const Page = async () => {
                                         )}
                                     </div>
                                     <div className="links">
-                                        <Link
-                                            href={`https://${process.env.AWS_S3_URL}/outputs/output-day-${item.day}.jpg`}
-                                            target="_blank"
-                                        >
+                                        <Link href={`/outputs/output-day-${item.day}.jpg`} target="_blank">
                                             <LucideDownload size={16} />
                                             Download
                                         </Link>

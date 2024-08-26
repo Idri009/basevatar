@@ -12,13 +12,20 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "basepaint.xyz",
                 port: "",
+            }
+        ],
+    },
+    rewrites: async () => {
+        return [
+            {
+                source: "/images/:path*",
+                destination: `https://${process.env.AWS_S3_URL}/images/:path*`
             },
             {
-                protocol: "https",
-                hostname: process.env.AWS_S3_URL,
-                port: "",
-            },
-        ],
+                source: "/outputs/:path*",
+                destination: `https://${process.env.AWS_S3_URL}/outputs/:path*`
+            }
+        ];
     },
 };
 
