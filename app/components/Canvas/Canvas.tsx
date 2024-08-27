@@ -5,17 +5,7 @@ import Tools from "./Tools";
 import { useEffect, useState } from "react";
 import useCountDown from "@/app/hooks/useCountDown";
 
-const Canvas = ({
-    theme,
-    colors,
-    currentTime,
-    finishTime,
-}: {
-    theme: string;
-    colors: string;
-    currentTime: number;
-    finishTime: number;
-}) => {
+const Canvas = ({ theme, colors, finishTime }: { theme: string; colors: string; finishTime: number }) => {
     //
     const { canvas, canvasDatas, canvasProperties, addPixel, addHistory, updateAvailableColors, updateLocalStorage } =
         useCanvas();
@@ -80,7 +70,7 @@ const Canvas = ({
         });
     };
 
-    const countdown = useCountDown({ currentTime, endTime: finishTime });
+    const countdown = useCountDown({ deadline: new Date(finishTime) });
 
     return (
         <>

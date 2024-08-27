@@ -45,7 +45,7 @@ const Page = async () => {
                             <div className="color" style={{ backgroundColor: "#FF0000" }}></div>
                         </div>
 
-                        <CountDown currDate={currDate} date={item.end_time} />
+                        <CountDown date={item.end_time} />
 
                         <div className="contributors">
                             <div className="title">Contributors</div>

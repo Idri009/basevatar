@@ -1,11 +1,8 @@
 "use client";
 import useCountDown from "@/app/hooks/useCountDown";
 
-const CountDown = ({ currDate, date }: { currDate: Date; date: Date }) => {
-    const endDate = new Date(date);
-    const now = currDate;
-
-    const countdown = useCountDown({ currentTime: now.getTime(), endTime: endDate.getTime() });
+const CountDown = ({ date }: { date: Date }) => {
+    const countdown = useCountDown({ deadline: date });
 
     return (
         <div className="countdown-timer">

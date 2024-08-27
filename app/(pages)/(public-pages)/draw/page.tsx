@@ -11,7 +11,6 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 
 const Page = async () => {
-    const currDate = new Date().getTime();
     const session = await getSession();
     const { theme, colors, error: drawError } = await fetchDraw();
     const { setting: finishTime } = await fetchSettings("finish_time");
@@ -42,12 +41,7 @@ const Page = async () => {
                         )}
                         {!drawError && session && session.address && !userHasAlreadyUploaded && (
                             <CanvasContextProvider>
-                                <Canvas
-                                    theme={theme}
-                                    colors={colors}
-                                    currentTime={currDate}
-                                    finishTime={Number(finishTime) || 0}
-                                />
+                                <Canvas theme={theme} colors={colors} finishTime={Number(finishTime) || 0} />
                             </CanvasContextProvider>
                         )}
                     </div>
