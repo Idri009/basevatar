@@ -1,12 +1,12 @@
-import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
 import Image from "next/image";
 import { LucideDownload, LucideSailboat } from "lucide-react";
 import fetchOutputs from "@/app/actions/public-pages/fetch-outputs";
 import ServerErrorMessage from "@/app/components/common/ServerErrorMessage";
 
+export const revalidate = 0;
+
 const Page = async () => {
-    noStore();
     const currDate = new Date();
     const { items, error } = await fetchOutputs();
 

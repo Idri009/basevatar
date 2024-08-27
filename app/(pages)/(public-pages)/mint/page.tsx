@@ -1,12 +1,11 @@
-import { unstable_noStore as noStore } from "next/cache";
 import Image from "next/image";
 import CountDown from "./components/CountDown";
 import fetchMint from "@/app/actions/public-pages/fetch-mint";
 import ServerErrorMessage from "@/app/components/common/ServerErrorMessage";
 
+export const revalidate = 0;
+
 const Page = async () => {
-    noStore();
-    const currDate = new Date();
     const { item, error } = await fetchMint();
 
     if (error || !item) {
