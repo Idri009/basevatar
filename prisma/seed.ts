@@ -3,7 +3,7 @@ import { PrismaClient, VoteType } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const date = new Date();
-date.setHours(23, 59, 59, 999);
+date.setUTCHours(23, 59, 59, 999);
 
 const initialSettings = [
     {
