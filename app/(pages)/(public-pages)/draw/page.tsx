@@ -59,6 +59,9 @@ const Page = async () => {
                                                 height={150}
                                                 alt={`day-${draw.day}`}
                                             />
+                                            {!draw.isReviewed && <span>Pending Review</span>}
+                                            {draw.isReviewed && draw.isSelected && <span>Selected</span>}
+                                            {draw.isReviewed && !draw.isSelected && <span>Not Selected</span>}
                                         </div>
                                     ))}
                                 </div>

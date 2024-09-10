@@ -18,6 +18,10 @@
                 @apply inline-block text-center p-2;
                 @apply border-2 border-white;
                 @apply bg-black text-white font-bold text-lg;
+
+                span {
+                    @apply block mt-2;
+                }
             }
         }
     }

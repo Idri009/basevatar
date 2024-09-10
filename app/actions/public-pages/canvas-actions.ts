@@ -36,14 +36,13 @@ https://${process.env.AWS_S3_URL}/${s3Url}
     }
 }
 
-const saveToDatabase = async (day: number, url: string, address: string, isSelected: boolean = true) => {
+const saveToDatabase = async (day: number, url: string, address: string) => {
     try {
         await prisma.image.create({
             data: {
                 day,
                 url,
                 address,
-                isSelected,
             },
         });
     } catch (e) {
