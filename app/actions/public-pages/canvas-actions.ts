@@ -20,14 +20,15 @@ export async function uploadImageToServer(data: string) {
         const buffer = Buffer.from(base64Image, "base64");
         const s3Url = await uploadFileToS3(buffer, `images/${day}/${uuidv4()}.jpg`);
 
-        await saveToDatabase(+day, s3Url, userAddress);
+        const image = await saveToDatabase(+day, s3Url, userAddress);
         //slack message
         const slackConservationId = "C078QPSCK6W";
         await postNewSlackMessage(
             slackConservationId,
             `New saved image from ${userAddress} on *day ${day}*:
 https://${process.env.AWS_S3_URL}/${s3Url}
-            `
+             Image ID: ${image?.id}                
+`
         );
 
         return s3Url;
@@ -38,13 +39,15 @@ https://${process.env.AWS_S3_URL}/${s3Url}
 
 const saveToDatabase = async (day: number, url: string, address: string) => {
     try {
-        await prisma.image.create({
+        const image = await prisma.image.create({
             data: {
                 day,
                 url,
                 address,
             },
         });
+
+        return image;
     } catch (e) {
         console.error(e);
     }
