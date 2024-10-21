@@ -17,7 +17,5 @@ declare namespace NodeJS {
         AWS_ACCESS_KEY_ID: string;
         AWS_SECRET_ACCESS_KEY: string;
         AWS_S3_URL: string;
-        SLACK_ADMIN_ID: string;
-        SLACK_COMMAND_SELECT_KEY: string;
     }
 }
