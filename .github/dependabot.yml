@@ -11,10 +11,10 @@ updates:
       groups:
           critical-updates:
               applies-to: security-updates
-              pattern: "*"
+              patterns: "*"
           core-upgrades:
               applies-to: version-updates
-              pattern: "*"
+              patterns: "*"
               update-types:
                   - "minor"
                   - "patch"
