@@ -1,0 +1,20 @@
+version: 2
+updates:
+    - package-ecosystem: "npm"
+      directory: "/"
+      schedule:
+          interval: "daily"
+      commit-message:
+          prefix: "chore(deps):"
+      labels:
+          - "dependencies"
+      groups:
+          critical-updates:
+              applies-to: security-updates
+              pattern: "*"
+          core-upgrades:
+              applies-to: version-updates
+              pattern: "*"
+              update-types:
+                  - "minor"
+                  - "patch"
