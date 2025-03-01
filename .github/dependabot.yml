@@ -5,7 +5,7 @@ updates:
       schedule:
           interval: "weekly"
           day: "saturday"
-      open-pull-requests-limit: 10
+      open-pull-requests-limit: 15
       labels:
           - "dependencies"
           - "web"
@@ -19,18 +19,13 @@ updates:
               update-types:
                   - "minor"
                   - "patch"
-          major-updates:
-              patterns:
-                  - "*"
-              update-types:
-                  - "major"
 
     - package-ecosystem: "npm"
       directory: "/cronjob"
       schedule:
           interval: "weekly"
           day: "saturday"
-      open-pull-requests-limit: 10
+      open-pull-requests-limit: 15
       labels:
           - "dependencies"
           - "cronjob"
@@ -44,18 +39,13 @@ updates:
               update-types:
                   - "minor"
                   - "patch"
-          major-updates:
-              patterns:
-                  - "*"
-              update-types:
-                  - "major"
 
     - package-ecosystem: "npm"
       directory: "/slack"
       schedule:
           interval: "weekly"
           day: "saturday"
-      open-pull-requests-limit: 10
+      open-pull-requests-limit: 15
       labels:
           - "dependencies"
           - "slack"
@@ -69,8 +59,3 @@ updates:
               update-types:
                   - "minor"
                   - "patch"
-          major-updates:
-              patterns:
-                  - "*"
-              update-types:
-                  - "major"
