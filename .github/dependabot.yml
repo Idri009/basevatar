@@ -5,7 +5,7 @@ updates:
       directory: "/web"
       schedule:
           interval: "monthly"
-          day: "1"
+          day: "monday"
       commit-message:
           prefix: "chore(web)"
       reviewers:
@@ -33,7 +33,7 @@ updates:
       directory: "/cronjob"
       schedule:
           interval: "monthly"
-          day: "1"
+          day: "monday"
       commit-message:
           prefix: "chore(cronjob)"
       reviewers:
@@ -61,7 +61,7 @@ updates:
       directory: "/slack"
       schedule:
           interval: "monthly"
-          day: "1"
+          day: "monday"
       commit-message:
           prefix: "chore(slack)"
       reviewers:
