@@ -47,7 +47,7 @@ const initialVotes = [
     },
 ];
 
-const initalOutput = [
+const initialOutput = [
     {
         opensea_url: "https://opensea.io/collection/beer",
         day: 0,
@@ -75,7 +75,7 @@ const seed = async () => {
     });
 
     await prisma.output.createMany({
-        data: initalOutput,
+        data: initialOutput,
     });
 };
 
