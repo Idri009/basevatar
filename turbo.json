@@ -7,7 +7,7 @@
             "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
         },
         "dev": {
-            "dependsOn": ["^generate"],
+            "dependsOn": ["^db:generate"],
             "cache": false,
             "persistent": true
         },
