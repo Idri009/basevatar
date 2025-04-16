@@ -1,6 +1,5 @@
+import { createVote, getSettings } from "@basevatar/database";
 import { app } from "../index";
-import { getDay } from "../services/settingService";
-import { addVote } from "../services/voteService";
 
 type VoteType = "color" | "theme";
 
@@ -11,7 +10,12 @@ const voteCommand = async () => {
         const voteType = command.text.split(" ")[0] as VoteType;
         const voteValue = command.text.split(" ")[1];
         const voteDayValue = command.text.split(" ")[2] ? +!command.text.split(" ")[2] : undefined;
-        const day = (await getDay()) ?? 1;
+        const settings = await getSettings();
+        if (!settings) {
+            await say("Unable to retrieve settings.");
+            return;
+        }
+        const { day } = settings;
         const voteDay = voteDayValue ?? (day ? +day + 2 : undefined);
 
         if (voteType !== "color" && voteType !== "theme") {
@@ -26,14 +30,14 @@ const voteCommand = async () => {
             return;
         }
 
-        if (!voteDay || voteDay <= +day) {
-            // If no vote day is provided
+        if (!voteDay || (day !== undefined && voteDay <= +day)) {
+            // If no vote day is provided or day is not greater than the current day
             await say("Invalid vote day.");
             return;
         }
 
         if (voteType === "theme") {
-            addVote({ type: voteType, value: voteValue, day: voteDay });
+            createVote({ type: voteType, value: voteValue, day: voteDay });
             await say(`
                 Your vote has been recorded.
                 *Theme:* ${voteValue}
@@ -50,7 +54,7 @@ const voteCommand = async () => {
                 await say("Invalid vote value. You must provide colors in hex format.");
                 return;
             }
-            addVote({ type: voteType, value: voteValue, day: voteDay });
+            createVote({ type: voteType, value: voteValue, day: voteDay });
             await say(`
                 Your vote has been recorded.
                 *Theme:* ${voteValue}

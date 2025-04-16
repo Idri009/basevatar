@@ -3,7 +3,13 @@
     "version": "1.0.0",
     "main": "index.js",
     "exports": {
-        ".": "./src/client.ts"
+        ".": "./src/index.ts",
+        "./prisma": "./src/client.ts",
+        "./getSettings": "./src/services/settingService.ts",
+        "./updateSettings": "./src/services/settingService.ts",
+        "./updateSettingByKey": "./src/services/settingService.ts",
+        "./getVotes": "./src/services/voteService.ts",
+        "./createVote": "./src/services/voteService.ts"
     },
     "scripts": {
         "db:generate": "prisma generate",

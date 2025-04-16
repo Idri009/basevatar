@@ -1,5 +1,5 @@
+import { getSettings } from "@basevatar/database";
 import { app } from "../index";
-import { getSettings } from "../services/settingService";
 
 const settingsCommand = async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,10 +16,10 @@ const settingsCommand = async () => {
         await ack();
         await say(`
         Your current settings are:
-        - *Day:* ${day?.value}
-        - *Finish Time:* ${finish_time?.value}
-        - *Theme:* ${theme?.value}
-        - *Color:* ${color?.value}
+        - *Day:* ${day}
+        - *Finish Time:* ${finish_time}
+        - *Theme:* ${theme}
+        - *Color:* ${color}
             `);
     });
 };
