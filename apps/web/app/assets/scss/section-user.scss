@@ -1,0 +1,24 @@
+.section-user {
+    @apply py-8;
+
+    .images {
+        @apply flex flex-wrap gap-12 py-12 justify-center md:justify-start;
+
+        & > .card {
+            @apply p-2;
+            @apply bg-zinc-900;
+
+            img {
+                @apply mb-2;
+            }
+
+            .card-title {
+                @apply text-zinc-200 text-center font-bold text-sm;
+            }
+
+            .card-text {
+                @apply text-zinc-400 text-center text-xs;
+            }
+        }
+    }
+}
