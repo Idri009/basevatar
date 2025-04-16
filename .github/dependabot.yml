@@ -1,132 +1,18 @@
 version: 2
 updates:
-    # "/apps/web"
-    - package-ecosystem: "npm"
-      directory: "/apps/web"
-      schedule:
-          interval: "monthly"
-          day: "monday"
-      commit-message:
-          prefix: "chore(web)"
-      reviewers:
-          - "enesyukselx"
-      assignees:
-          - "enesyukselx"
-      labels:
-          - "dependencies"
-          - "web"
-      groups:
-          security-updates:
-              applies-to: security-updates
-              patterns:
-                  - "*"
-          minor-updates:
-              applies-to: version-updates
-              patterns:
-                  - "*"
-              update-types:
-                  - "minor"
-                  - "patch"
-
-    # "/apps/cronjob"
-    - package-ecosystem: "npm"
-      directory: "/apps/cronjob"
-      schedule:
-          interval: "monthly"
-          day: "monday"
-      commit-message:
-          prefix: "chore(cronjob)"
-      reviewers:
-          - "enesyukselx"
-      assignees:
-          - "enesyukselx"
-      labels:
-          - "dependencies"
-          - "cronjob"
-      groups:
-          security-updates:
-              applies-to: security-updates
-              patterns:
-                  - "*"
-          minor-updates:
-              applies-to: version-updates
-              patterns:
-                  - "*"
-              update-types:
-                  - "minor"
-                  - "patch"
-
-    # "/apps/slack"
-    - package-ecosystem: "npm"
-      directory: "/apps/slack"
-      schedule:
-          interval: "monthly"
-          day: "monday"
-      commit-message:
-          prefix: "chore(slack)"
-      reviewers:
-          - "enesyukselx"
-      assignees:
-          - "enesyukselx"
-      labels:
-          - "dependencies"
-          - "slack"
-      groups:
-          security-updates:
-              applies-to: security-updates
-              patterns:
-                  - "*"
-          minor-updates:
-              applies-to: version-updates
-              patterns:
-                  - "*"
-              update-types:
-                  - "minor"
-                  - "patch"
-
-    # "root"
     - package-ecosystem: "npm"
       directory: "/"
       schedule:
           interval: "monthly"
           day: "monday"
       commit-message:
-          prefix: "chore(root)"
+          prefix: "chore"
       reviewers:
           - "enesyukselx"
       assignees:
           - "enesyukselx"
       labels:
           - "dependencies"
-          - "root"
-      groups:
-          security-updates:
-              applies-to: security-updates
-              patterns:
-                  - "*"
-          minor-updates:
-              applies-to: version-updates
-              patterns:
-                  - "*"
-              update-types:
-                  - "minor"
-                  - "patch"
-
-    # "/packages/prisma"
-    - package-ecosystem: "npm"
-      directory: "/packages/prisma"
-      schedule:
-          interval: "monthly"
-          day: "monday"
-      commit-message:
-          prefix: "chore(database)"
-      reviewers:
-          - "enesyukselx"
-      assignees:
-          - "enesyukselx"
-      labels:
-          - "dependencies"
-          - "database"
       groups:
           security-updates:
               applies-to: security-updates
