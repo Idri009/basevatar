@@ -45,3 +45,10 @@
 
 -   **Description**: Get current settings.
 -   **Usage**: `/settings`
+
+---
+
+## `/today`
+
+-   **Description**: Get today's images.
+-   **Usage**: `/today`

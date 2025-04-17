@@ -1,4 +1,33 @@
-import { prisma } from "@basevatar/database";
+import { getSettings, prisma } from "@basevatar/database";
+
+const getTodaysImages = async () => {
+    try {
+        const settings = await getSettings();
+
+        if (!settings || !settings.day) {
+            return null;
+        }
+
+        const images = await prisma.image.findMany({
+            where: {
+                day: parseInt(settings.day),
+                isDeleted: false,
+            },
+        });
+
+        return images.map((image) => ({
+            id: image.id,
+            url: `https://${process.env.AWS_S3_URL}/${image.url}`,
+            address: image.address,
+            isReviewed: image.isReviewed,
+            isApproved: image.isSelected,
+            isDeleted: image.isDeleted,
+        }));
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
+};
 
 const getImageById = async (id: string) => {
     try {
@@ -66,4 +95,4 @@ const reviewImage = async (id: string, review: "approve" | "reject") => {
     }
 };
 
-export { getImageById, reviewImage };
+export { getTodaysImages, getImageById, reviewImage };
