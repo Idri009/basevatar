@@ -14,9 +14,9 @@
     "license": "ISC",
     "description": "",
     "devDependencies": {
-        "@basevatar/database": "*",
-        "@basevatar/eslint-config": "*",
-        "@basevatar/typescript-config": "*",
+        "@basevatar/database": "workspace:*",
+        "@basevatar/eslint-config": "workspace:*",
+        "@basevatar/typescript-config": "workspace:*",
         "@types/node": "^22.13.16",
         "dotenv": "^16.4.7",
         "eslint": "^9.23.0",

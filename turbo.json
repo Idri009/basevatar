@@ -25,10 +25,10 @@
             "cache": false
         },
         "typecheck": {
-            "outputs": []
+            "dependsOn": ["db:generate", "^db:generate"]
         },
         "lint": {
-            "outputs": []
+            "dependsOn": []
         },
         "clean": {
             "cache": false

@@ -11,10 +11,15 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 10.8.1
+                  run_install: false
             - uses: actions/setup-node@v4
               with:
                   node-version: "20"
-                  cache: "npm"
-                  cache-dependency-path: "package-lock.json"
-            - run: npm install
-            - run: npx turbo run typecheck lint --filter=@basevatar/database
+                  cache: "pnpm"
+                  cache-dependency-path: "pnpm-lock.yaml"
+            - run: pnpm install --no-frozen-lockfile
+            - run: pnpm exec turbo run typecheck lint --filter=@basevatar/database

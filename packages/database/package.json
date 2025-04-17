@@ -26,11 +26,12 @@
         "@prisma/client": "^6.6.0"
     },
     "devDependencies": {
-        "@basevatar/eslint-config": "*",
-        "@basevatar/typescript-config": "*",
+        "@basevatar/eslint-config": "workspace:*",
+        "@basevatar/typescript-config": "workspace:*",
+        "@types/node": "^22.14.1",
         "eslint": "^9.23.0",
         "prisma": "^6.6.0",
-        "typescript": "^5.8.3",
-        "tsx": "^4.19.3"
+        "tsx": "^4.19.3",
+        "typescript": "^5.8.3"
     }
 }
