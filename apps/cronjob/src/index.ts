@@ -1,3 +1,6 @@
+import "dotenv/config";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require("dotenv").config();
 import { cronjob } from "./cronjob";
 import cron from "node-cron";
 
