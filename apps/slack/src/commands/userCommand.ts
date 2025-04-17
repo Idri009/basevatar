@@ -1,5 +1,5 @@
+import { getUserImages } from "@basevatar/database";
 import { app } from "../index";
-import { getUserInfoByWalletId } from "../services/userService";
 
 const userCommand = async () => {
     app.command("/user", async ({ command, ack, say }) => {
@@ -7,13 +7,29 @@ const userCommand = async () => {
         await ack();
         const id = command.text;
 
-        const user = await getUserInfoByWalletId(id);
-        if (!user) {
+        const userImages = await getUserImages(id);
+
+        if (!userImages) {
             await say("Unable to retrieve user information.");
             return;
         }
 
-        const { countImages, images } = user;
+        const countImages = userImages.length;
+
+        if (!countImages) {
+            await say("No images found for this user.");
+            return;
+        }
+
+        const images = userImages.map((image) => {
+            return {
+                day: image.day,
+                url: `https://${process.env.AWS_S3_URL}/${image.url}`,
+                isReviewed: image.isReviewed,
+                isApproved: image.isSelected,
+                isDeleted: image.isDeleted,
+            };
+        });
 
         await say(`
         User: ${id}
