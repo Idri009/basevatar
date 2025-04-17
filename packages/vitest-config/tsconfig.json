@@ -1,0 +1,10 @@
+{
+    "extends": ["@basevatar/typescript-config/base.json"],
+    "compilerOptions": {
+        "outDir": "./dist",
+        "allowImportingTsExtensions": false,
+        "noEmit": false
+    },
+    "include": ["configs", "scripts"],
+    "exclude": ["node_modules", "dist"]
+}
