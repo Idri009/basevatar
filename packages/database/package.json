@@ -2,6 +2,7 @@
     "name": "@basevatar/database",
     "version": "1.0.0",
     "main": "index.js",
+    "type": "module",
     "exports": {
         ".": "./src/index.ts",
         "./prisma": "./src/client.ts",
@@ -16,7 +17,10 @@
         "db:seed": "tsx src/seed.ts",
         "typecheck": "tsc -b",
         "format": "prisma format",
-        "lint": "eslint --ext .ts src --max-warnings 0"
+        "lint": "eslint --ext .ts src --max-warnings 0",
+        "test": "vitest run",
+        "test:watch": "vitest watch",
+        "test:coverage": "vitest run --coverage"
     },
     "keywords": [],
     "author": "",
@@ -28,10 +32,13 @@
     "devDependencies": {
         "@basevatar/eslint-config": "workspace:*",
         "@basevatar/typescript-config": "workspace:*",
+        "@basevatar/vitest-config": "workspace:*",
         "@types/node": "^22.14.1",
+        "@vitest/coverage-istanbul": "^3.1.1",
         "eslint": "^9.23.0",
         "prisma": "^6.6.0",
         "tsx": "^4.19.3",
-        "typescript": "^5.8.3"
+        "typescript": "^5.8.3",
+        "vitest": "^3.1.1"
     }
 }
