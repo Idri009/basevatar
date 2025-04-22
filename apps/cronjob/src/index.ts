@@ -17,3 +17,5 @@ cron.schedule(
 );
 
 console.log("Cronjob started");
+// Run the cronjob immediately on startup
+cronjob();
