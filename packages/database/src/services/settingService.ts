@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "../client";
 
 const getSettings = async () => {
@@ -35,9 +36,12 @@ const updateSettings = async (id: string, value: string): Promise<boolean> => {
     }
 };
 
-const updateSettingByKey = async (key: string, value: string): Promise<boolean> => {
+const updateSettingByKey = async (key: string, value: string, tx?: Prisma.TransactionClient): Promise<boolean> => {
+    // check if tx is provided
+    const db = tx ?? prisma;
+
     try {
-        const setting = await prisma.setting.findFirst({
+        const setting = await db.setting.findFirst({
             where: { key },
         });
 
@@ -46,7 +50,7 @@ const updateSettingByKey = async (key: string, value: string): Promise<boolean> 
             return false;
         }
 
-        await prisma.setting.update({
+        await db.setting.update({
             where: { id: setting.id },
             data: { value },
         });
