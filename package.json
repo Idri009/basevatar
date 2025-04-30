@@ -35,7 +35,8 @@
     "description": "",
     "devDependencies": {
         "prisma": "^6.6.0",
-        "turbo": "^2.5.0"
+        "turbo": "^2.5.0",
+        "vitest": "^3.1.1"
     },
     "dependencies": {
         "@prisma/client": "^6.6.0"
