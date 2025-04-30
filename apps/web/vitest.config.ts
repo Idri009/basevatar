@@ -1,4 +1,4 @@
 export default (async () => {
-    const { nodeConfig } = await import("@basevatar/vitest-config/node");
-    return nodeConfig;
+    const { uiConfig } = await import("@basevatar/vitest-config/ui");
+    return uiConfig;
 })();
