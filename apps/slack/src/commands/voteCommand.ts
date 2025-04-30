@@ -7,15 +7,18 @@ const voteCommand = async () => {
     app.command("/vote", async ({ command, ack, say }) => {
         //
         await ack();
-        const voteType = command.text.split(" ")[0] as VoteType;
-        const voteValue = command.text.split(" ")[1];
-        const voteDayValue = command.text.split(" ")[2] ? +!command.text.split(" ")[2] : undefined;
+        const args = command.text.split(" ");
+        const voteType = args[0] as VoteType;
+        const voteValue = args[1];
+        const voteDayValue = (args[2] ?? undefined) && parseInt(args[2], 10);
+
         const settings = await getSettings();
         if (!settings) {
             await say("Unable to retrieve settings.");
             return;
         }
         const { day } = settings;
+        const currentDay = day ? parseInt(day, 10) : 0;
         // if vote day is not provided, set it to day + 2
         const voteDay = voteDayValue ?? (day ? +day + 2 : undefined);
 
@@ -31,7 +34,7 @@ const voteCommand = async () => {
             return;
         }
 
-        if (!voteDay || (day !== undefined && voteDay <= +day)) {
+        if (!voteDay || (day !== undefined && voteDay <= currentDay)) {
             // If no vote day is provided or day is not greater than the current day
             await say("Invalid vote day.");
             return;
