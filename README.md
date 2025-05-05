@@ -42,7 +42,7 @@ This project uses [Turborepo](https://turbo.build/) for monorepo management. To 
 1. **Install dependencies for all apps and packages:**
 
 ```bash
-npm install
+pnpm install
 ```
 
 2. **Set up environment variables:**
@@ -52,14 +52,14 @@ npm install
 3. **Run all apps in development mode:**
 
 ```bash
-npx turbo run dev
+pnpm turbo run dev
 ```
 
 -   This will start the web frontend, cronjob, and Slack bot (if configured) concurrently.
 -   You can also run a specific app with:
-    -   `npx turbo run dev --filter=web`
-    -   `npx turbo run dev --filter=cronjob`
-    -   `npx turbo run dev --filter=slack`
+    -   `pnpm turbo run dev --filter=web`
+    -   `pnpm turbo run dev --filter=cronjob`
+    -   `pnpm turbo run dev --filter=slack`
 
 4. **Access the web app:**
 
